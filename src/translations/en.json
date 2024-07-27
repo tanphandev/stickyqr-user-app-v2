@@ -1,0 +1,28 @@
+{
+  "AUTH": {
+    "SIGN_OUT": "Sign out"
+  },
+  "HOME": {
+    "HOME_SCREEN": "Home screen"
+  },
+  "SCAN_QR": {
+    "SCAN_QR_SCREEN": "Scan QR screen"
+  },
+  "REWARDS": {
+    "REWARDS_SCREEN": "Rewards screen"
+  },
+  "ACCOUNT": {
+    "ACCOUNT": "Account",
+    "ACCOUNT_SCREEN": "Account screen"
+  },
+  "SETTING": {
+    "VIETNAMESE": "Vietnamese",
+    "ENGLISH": "English",
+    "LANGUAGE": "Language",
+    "THEME": {
+      "DARK": "Dark",
+      "LIGHT": "Light",
+      "TITLE": "Theme"
+    }
+  }
+}

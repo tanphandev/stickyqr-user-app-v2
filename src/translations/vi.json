@@ -1,0 +1,28 @@
+{
+  "AUTH": {
+    "SIGN_OUT": "Đăng xuất"
+  },
+  "HOME": {
+    "HOME_SCREEN": "Trang chủ"
+  },
+  "SCAN_QR": {
+    "SCAN_QR_SCREEN": "Quét mã QR"
+  },
+  "REWARDS": {
+    "REWARDS_SCREEN": "Ưu đãi"
+  },
+  "ACCOUNT": {
+    "ACCOUNT": "Tài khoản",
+    "ACCOUNT_SCREEN": "Tài khoản"
+  },
+  "SETTING": {
+    "VIETNAMESE": "Tiếng Việt",
+    "ENGLISH": "English",
+    "LANGUAGE": "Ngôn ngữ",
+    "theme": {
+      "DARK": "Dark",
+      "LIGHT": "Light",
+      "TITLE": "Theme"
+    }
+  }
+}
