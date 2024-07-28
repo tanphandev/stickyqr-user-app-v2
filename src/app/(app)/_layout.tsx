@@ -1,13 +1,16 @@
 /* eslint-disable react/no-unstable-nested-components */
+import AccountFilled from 'assets/navigation/account-filled.svg';
+import AccountRegular from 'assets/navigation/account-regular.svg';
+import RewardsFilled from 'assets/navigation/gift-filled.svg';
+import RewardsRegular from 'assets/navigation/gift-regular.svg';
+import HomeIconFilled from 'assets/navigation/home-filled.svg';
+import HomeIconRegular from 'assets/navigation/home-regular.svg';
+import ScanQrFilled from 'assets/navigation/scan-qr-filled.svg';
+import ScanQrRegular from 'assets/navigation/scan-qr-regular.svg';
 import { Redirect, SplashScreen, Tabs } from 'expo-router';
 import React, { useCallback, useEffect } from 'react';
 
 import { useAuth, useIsFirstTime } from '@/core';
-import {
-  Feed as FeedIcon,
-  Settings as SettingsIcon,
-  Style as StyleIcon,
-} from '@/ui/icons';
 
 export default function TabLayout() {
   const status = useAuth.use.status();
@@ -35,7 +38,8 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => <FeedIcon color={color} />,
+          tabBarIcon: ({ focused }) =>
+            focused ? <HomeIconFilled /> : <HomeIconRegular />,
         }}
       />
 
@@ -44,7 +48,8 @@ export default function TabLayout() {
         options={{
           title: 'Scan QR',
           headerShown: false,
-          tabBarIcon: ({ color }) => <StyleIcon color={color} />,
+          tabBarIcon: ({ focused }) =>
+            focused ? <ScanQrFilled /> : <ScanQrRegular />,
         }}
       />
       <Tabs.Screen
@@ -52,7 +57,8 @@ export default function TabLayout() {
         options={{
           title: 'Rewards',
           headerShown: false,
-          tabBarIcon: ({ color }) => <SettingsIcon color={color} />,
+          tabBarIcon: ({ focused }) =>
+            focused ? <RewardsFilled /> : <RewardsRegular />,
         }}
       />
       <Tabs.Screen
@@ -60,7 +66,8 @@ export default function TabLayout() {
         options={{
           title: 'Account',
           headerShown: false,
-          tabBarIcon: ({ color }) => <SettingsIcon color={color} />,
+          tabBarIcon: ({ focused }) =>
+            focused ? <AccountFilled /> : <AccountRegular />,
         }}
       />
     </Tabs>
