@@ -10,7 +10,7 @@ import ScanQrRegular from 'assets/navigation/scan-qr-regular.svg';
 import { Redirect, SplashScreen, Tabs } from 'expo-router';
 import React, { useCallback, useEffect } from 'react';
 
-import { useAuth, useIsFirstTime } from '@/core';
+import { translate, useAuth, useIsFirstTime } from '@/core';
 
 export default function TabLayout() {
   const status = useAuth.use.status();
@@ -37,7 +37,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: translate('MAIN_TABS.HOME'),
           tabBarIcon: ({ focused }) =>
             focused ? <HomeIconFilled /> : <HomeIconRegular />,
         }}
@@ -46,7 +46,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="scan-qr"
         options={{
-          title: 'Scan QR',
+          title: translate('MAIN_TABS.SCAN_QR'),
           headerShown: false,
           tabBarIcon: ({ focused }) =>
             focused ? <ScanQrFilled /> : <ScanQrRegular />,
@@ -55,7 +55,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="rewards"
         options={{
-          title: 'Rewards',
+          title: translate('MAIN_TABS.REWARDS'),
           headerShown: false,
           tabBarIcon: ({ focused }) =>
             focused ? <RewardsFilled /> : <RewardsRegular />,
@@ -64,7 +64,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="account"
         options={{
-          title: 'Account',
+          title: translate('MAIN_TABS.ACCOUNT'),
           headerShown: false,
           tabBarIcon: ({ focused }) =>
             focused ? <AccountFilled /> : <AccountRegular />,
