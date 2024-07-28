@@ -1,6 +1,6 @@
 {
-  "name": "stickyqr-user-app",
-  "version": "0.0.1",
+  "name": "stickyqr-user-app-v2",
+  "version": "2.0.0",
   "private": true,
   "main": "expo-router/entry",
   "scripts": {
@@ -24,6 +24,12 @@
     "build:staging:android": "cross-env APP_ENV=staging EXPO_NO_DOTENV=1 eas build --profile staging --platform android ",
     "build:production:ios": "cross-env APP_ENV=production EXPO_NO_DOTENV=1 eas build --profile production --platform ios",
     "build:production:android": "cross-env APP_ENV=production EXPO_NO_DOTENV=1 eas build --profile production --platform android ",
+    "build:simulator-development:ios": "cross-env APP_ENV=development EXPO_NO_DOTENV=1 eas build --profile simulator-development --platform ios",
+    "build:simulator-development:android": "cross-env APP_ENV=development EXPO_NO_DOTENV=1 eas build --profile simulator-development --platform android ",
+    "build:simulator-staging:ios": "cross-env APP_ENV=staging EXPO_NO_DOTENV=1 eas build --profile simulator-staging --platform ios",
+    "build:simulator-staging:android": "cross-env APP_ENV=staging EXPO_NO_DOTENV=1 eas build --profile simulator-staging --platform android ",
+    "build:simulator-production:ios": "cross-env APP_ENV=production EXPO_NO_DOTENV=1 eas build --profile simulator-production --platform ios",
+    "build:simulator-production:android": "cross-env APP_ENV=production EXPO_NO_DOTENV=1 eas build --profile simulator-production --platform android ",
     "postinstall": "husky install",
     "app-release": "cross-env SKIP_BRANCH_PROTECTION=true np --no-publish --no-cleanup --no-release-draft",
     "version": "pnpm run prebuild && git add .",

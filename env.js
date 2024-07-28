@@ -33,10 +33,10 @@ require('dotenv').config({
 
 // TODO: Replace these values with your own
 
-const BUNDLE_ID = 'com.stickyqr-user-app'; // ios bundle id
-const PACKAGE = 'com.stickyqr-user-app'; // android package name
-const NAME = 'stickyqr-user-app'; // app name
-const SCHEME = 'stickyqr-user-app'; // app scheme
+const BUNDLE_ID = 'com.stickyqr-user-app_v2'; // ios bundle id
+const PACKAGE = 'com.stickyqr_user_app_v2'; // android package name
+const NAME = 'stickyqr-user-app-v2'; // app name
+const SCHEME = 'stickyqr-user-app-v2'; // app scheme
 
 /**
  * We declare a function withEnvSuffix that will add a suffix to the variable name based on the APP_ENV
