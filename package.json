@@ -1,6 +1,6 @@
 {
-  "name": "stickyqr-user-app",
-  "version": "0.0.1",
+  "name": "stickyqr-user-app-v2",
+  "version": "2.0.0",
   "private": true,
   "main": "expo-router/entry",
   "scripts": {
@@ -24,6 +24,12 @@
     "build:staging:android": "cross-env APP_ENV=staging EXPO_NO_DOTENV=1 eas build --profile staging --platform android ",
     "build:production:ios": "cross-env APP_ENV=production EXPO_NO_DOTENV=1 eas build --profile production --platform ios",
     "build:production:android": "cross-env APP_ENV=production EXPO_NO_DOTENV=1 eas build --profile production --platform android ",
+    "build:simulator-development:ios": "cross-env APP_ENV=development EXPO_NO_DOTENV=1 eas build --profile simulator-development --platform ios",
+    "build:simulator-development:android": "cross-env APP_ENV=development EXPO_NO_DOTENV=1 eas build --profile simulator-development --platform android ",
+    "build:simulator-staging:ios": "cross-env APP_ENV=staging EXPO_NO_DOTENV=1 eas build --profile simulator-staging --platform ios",
+    "build:simulator-staging:android": "cross-env APP_ENV=staging EXPO_NO_DOTENV=1 eas build --profile simulator-staging --platform android ",
+    "build:simulator-production:ios": "cross-env APP_ENV=production EXPO_NO_DOTENV=1 eas build --profile simulator-production --platform ios",
+    "build:simulator-production:android": "cross-env APP_ENV=production EXPO_NO_DOTENV=1 eas build --profile simulator-production --platform android ",
     "postinstall": "husky install",
     "app-release": "cross-env SKIP_BRANCH_PROTECTION=true np --no-publish --no-cleanup --no-release-draft",
     "version": "pnpm run prebuild && git add .",
@@ -86,8 +92,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.24.5",
-    "@commitlint/cli": "^17.8.1",
-    "@commitlint/config-conventional": "^17.8.1",
     "@dev-plugins/react-navigation": "^0.0.6",
     "@dev-plugins/react-query": "^0.0.6",
     "@expo/config": "~9.0.2",
@@ -120,6 +124,7 @@
     "metro-babel-register": "^0.73.10",
     "np": "^7.7.0",
     "prettier": "^2.8.8",
+    "react-native-svg-transformer": "^1.5.0",
     "react-test-renderer": "^18.3.1",
     "tailwindcss": "3.3.2",
     "ts-jest": "^29.1.2",

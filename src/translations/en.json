@@ -1,28 +1,34 @@
 {
+  "ACCOUNT": {
+    "ACCOUNT": "Account",
+    "ACCOUNT_SCREEN": "Account screen"
+  },
   "AUTH": {
     "SIGN_OUT": "Sign out"
   },
   "HOME": {
     "HOME_SCREEN": "Home screen"
   },
-  "SCAN_QR": {
-    "SCAN_QR_SCREEN": "Scan QR screen"
+  "MAIN_TABS": {
+    "ACCOUNT": "Account",
+    "HOME": "Home",
+    "REWARDS": "Rewards",
+    "SCAN_QR": "Scan QR"
   },
   "REWARDS": {
     "REWARDS_SCREEN": "Rewards screen"
   },
-  "ACCOUNT": {
-    "ACCOUNT": "Account",
-    "ACCOUNT_SCREEN": "Account screen"
+  "SCAN_QR": {
+    "SCAN_QR_SCREEN": "Scan QR screen"
   },
   "SETTING": {
-    "VIETNAMESE": "Vietnamese",
     "ENGLISH": "English",
     "LANGUAGE": "Language",
     "THEME": {
       "DARK": "Dark",
       "LIGHT": "Light",
       "TITLE": "Theme"
-    }
+    },
+    "VIETNAMESE": "Vietnamese"
   }
 }

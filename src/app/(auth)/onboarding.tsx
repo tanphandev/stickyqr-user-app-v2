@@ -11,9 +11,9 @@ export default function Onboarding() {
   return (
     <View className="flex h-full items-center  justify-center">
       <FocusAwareStatusBar />
-      <View className="w-full flex-1">
+      <View className="w-full flex-1 px-4 pt-16">
         {/* <Cover /> */}
-        <Text>On Boarding Screen</Text>
+        <Text className="text-xl font-bold">On Boarding Screen</Text>
       </View>
       <View className="justify-end ">
         <SafeAreaView className="mt-6">

@@ -1,28 +1,34 @@
 {
+  "ACCOUNT": {
+    "ACCOUNT": "Tài khoản",
+    "ACCOUNT_SCREEN": "Tài khoản"
+  },
   "AUTH": {
     "SIGN_OUT": "Đăng xuất"
   },
   "HOME": {
     "HOME_SCREEN": "Trang chủ"
   },
-  "SCAN_QR": {
-    "SCAN_QR_SCREEN": "Quét mã QR"
+  "MAIN_TABS": {
+    "ACCOUNT": "Tài khoản",
+    "HOME": "Trang chủ",
+    "REWARDS": "Đổi thưởng",
+    "SCAN_QR": "Quét mã"
   },
   "REWARDS": {
     "REWARDS_SCREEN": "Ưu đãi"
   },
-  "ACCOUNT": {
-    "ACCOUNT": "Tài khoản",
-    "ACCOUNT_SCREEN": "Tài khoản"
+  "SCAN_QR": {
+    "SCAN_QR_SCREEN": "Quét mã QR"
   },
   "SETTING": {
-    "VIETNAMESE": "Tiếng Việt",
     "ENGLISH": "English",
     "LANGUAGE": "Ngôn ngữ",
-    "theme": {
+    "THEME": {
       "DARK": "Dark",
       "LIGHT": "Light",
       "TITLE": "Theme"
-    }
+    },
+    "VIETNAMESE": "Tiếng Việt"
   }
 }
