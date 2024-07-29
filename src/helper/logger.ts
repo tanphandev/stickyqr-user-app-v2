@@ -3,7 +3,6 @@ import { Env } from '@/core/env';
 type LogType = 'log' | 'error' | 'warn' | 'info';
 
 export const logger = (type: LogType, message: string, content: any) => {
-  console.log('Env.ENABLE_LOGGER', Env.ENABLE_LOGGER, typeof Env.ENABLE_LOGGER);
   if (!Env.ENABLE_LOGGER) return;
   switch (type) {
     case 'log':

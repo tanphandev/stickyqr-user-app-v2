@@ -44,3 +44,14 @@ export type Address = {
   country?: string;
   zipCode?: string;
 };
+
+export interface RefreshTokenDto {
+  token: string;
+}
+export interface RefreshToken {
+  accessToken: string;
+  expiresIn: string;
+  refreshToken: string;
+  userId: string;
+  displayName: string;
+}

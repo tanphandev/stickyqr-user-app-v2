@@ -2,8 +2,13 @@ import { Platform } from 'react-native';
 
 import { LANG } from '@/configs/lang';
 import { getLanguage } from '@/core';
-import { getToken } from '@/core/auth/utils';
+import { signOut } from '@/core/auth';
+import type { TokenType } from '@/core/auth/utils';
+import { getToken, setToken } from '@/core/auth/utils';
+import { logger } from '@/helper';
 
+import type { RefreshToken } from '../auth';
+import { refreshToken } from '../auth/refresh-token';
 import { USER_APP_PLATFORM } from './constant';
 
 export async function fetchApi(
@@ -37,10 +42,7 @@ export async function authFetchApi(
   const lang = getLanguage();
   const os = Platform.OS;
   const platform = USER_APP_PLATFORM;
-
-  console.log('AUTH FETCH');
-  let token = getToken();
-  console.log('token', token);
+  const token = getToken();
 
   if (typeof input === 'string') {
     const url = new URL(input);
@@ -52,23 +54,27 @@ export async function authFetchApi(
 
   // verify token
   if (token.access && token.refresh && token.expiresIn) {
-    // if (!isTokenNotExpired(token.expiresIn)) {
-    //   try {
-    //     const responseData: RefreshToken = await refreshToken(rfToken);
-    //     storeAuthTokenFromClient(
-    //       responseData.accessToken,
-    //       responseData.refreshToken,
-    //       responseData.expiresIn,
-    //       true
-    //     );
-    //     acToken = responseData.accessToken;
-    //   } catch (error) {
-    //     removeAuthTokenFromClient();
-    //     window.location.reload();
-    //   }
-    // }
+    if (isTokenExpired(token.expiresIn)) {
+      console.log('token expired ===');
+      try {
+        const responseData: RefreshToken = await refreshToken(token.refresh);
+        token.access = responseData.accessToken;
+        const newToken: TokenType = {
+          access: responseData.accessToken,
+          refresh: responseData.refreshToken,
+          expiresIn: responseData.expiresIn,
+        };
+        logger('log', '[ApiService]-[RefreshToken]-[Data]', responseData);
+        console.log('newToken', newToken);
+        setToken(newToken);
+      } catch (error) {
+        logger('log', '[ApiService]-[RefreshToken]-[Error]', error);
+        signOut();
+      }
+    }
   }
 
+  console.log('token.access', token.access);
   if (token.access) {
     init = {
       ...init,
@@ -83,10 +89,11 @@ export async function authFetchApi(
   return fetch(input, init);
 }
 
-export const isTokenNotExpired = (expiresIn: string) => {
+export const isTokenExpired = (expiresIn: string) => {
   const exp = new Date(expiresIn)?.getTime();
   const now = Date.now();
 
   const diff = exp - now;
-  return diff >= 60 * 1000;
+  console.log('diff', diff / 1000);
+  return diff < 86370 * 1000;
 };
