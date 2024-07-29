@@ -7,12 +7,9 @@ import * as z from 'zod';
 import { Button, ControlledInput, Text, View } from '@/ui';
 
 const schema = z.object({
-  name: z.string().optional(),
-  email: z
-    .string({
-      required_error: 'Email is required',
-    })
-    .email('Invalid email format'),
+  phone: z.string({
+    required_error: 'Phone is required',
+  }),
   password: z
     .string({
       required_error: 'Password is required',
@@ -35,26 +32,11 @@ export const LoginForm = ({ onSubmit = () => {} }: LoginFormProps) => {
       <Text testID="form-title" className="pb-6 text-center text-2xl">
         Sign In
       </Text>
-
+      <ControlledInput control={control} name="phone" label="Phone Number" />
       <ControlledInput
-        testID="name"
-        control={control}
-        name="name"
-        label="Name"
-      />
-
-      <ControlledInput
-        testID="email-input"
-        control={control}
-        name="email"
-        label="Email"
-      />
-      <ControlledInput
-        testID="password-input"
         control={control}
         name="password"
         label="Password"
-        placeholder="***"
         secureTextEntry={true}
       />
       <Button
