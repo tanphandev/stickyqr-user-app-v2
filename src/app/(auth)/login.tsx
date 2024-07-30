@@ -1,13 +1,13 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
 
-import type { LoginWithPassword } from '@/api/auth';
 import { useLogin } from '@/api/auth';
+import type { LoginWithPassword } from '@/api/auth/type';
 import { useGetProfile } from '@/api/auth/use-profile';
 import type { LoginFormProps } from '@/components/login-form';
 import { LoginForm } from '@/components/login-form';
 import PATH from '@/configs/navs';
-import { useAuth } from '@/core';
+import { useAuth } from '@/core/auth';
 import { setToken } from '@/core/auth/utils';
 import { useSoftKeyboardEffect } from '@/core/keyboard';
 import { logger } from '@/helper';
@@ -18,6 +18,7 @@ export default function Login() {
   const signIn = useAuth.use.signIn();
   const { mutateAsync: login } = useLogin();
   const { mutateAsync: getProfile } = useGetProfile();
+
   useSoftKeyboardEffect();
 
   const onSubmit: LoginFormProps['onSubmit'] = async (data) => {

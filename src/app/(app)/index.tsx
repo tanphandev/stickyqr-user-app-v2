@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text } from 'react-native';
 
-import { translate } from '@/core';
+import { translate } from '@/core/i18n/utils';
 import { FocusAwareStatusBar, View } from '@/ui';
 
 export default function HomeScreen() {

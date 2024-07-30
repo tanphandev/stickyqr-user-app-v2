@@ -10,7 +10,9 @@ import ScanQrRegular from 'assets/navigation/scan-qr-regular.svg';
 import { Redirect, SplashScreen, Tabs } from 'expo-router';
 import React, { useCallback, useEffect } from 'react';
 
-import { translate, useAuth, useIsFirstTime } from '@/core';
+import { useAuth } from '@/core/auth';
+import { useIsFirstTime } from '@/core/hooks';
+import { translate } from '@/core/i18n/utils';
 
 export default function TabLayout() {
   const status = useAuth.use.status();

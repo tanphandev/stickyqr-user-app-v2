@@ -1,7 +1,6 @@
 import { Platform } from 'react-native';
 
 import { LANG } from '@/configs/lang';
-import { signOut } from '@/core/auth';
 import type { TokenType } from '@/core/auth/utils';
 import { getToken, setToken } from '@/core/auth/utils';
 import { getLanguage } from '@/core/i18n';
@@ -12,32 +11,9 @@ import { refreshToken } from '../auth/refresh-token';
 import type { RefreshToken } from '../auth/type';
 import { USER_APP_PLATFORM } from './constant';
 
-export async function fetchApi(
+export async function fetchVerifyToken(
   input: RequestInfo,
-  init?: RequestInit
-): Promise<Response> {
-  const lang = getLanguage();
-  const os = Platform.OS;
-  const platform = USER_APP_PLATFORM;
-
-  if (typeof input === 'string') {
-    const url = new URL(input);
-    url.searchParams.append('lang', lang || LANG.EN);
-    url.searchParams.append('platform', platform!);
-    url.searchParams.append('os', os);
-    input = url.toString();
-  }
-
-  init = {
-    ...init,
-    cache: 'no-store',
-  };
-
-  return fetch(input, init);
-}
-
-export async function authFetchApi(
-  input: RequestInfo,
+  signOutCallBack: () => void,
   init?: RequestInit
 ): Promise<Response> {
   const lang = getLanguage();
@@ -68,7 +44,7 @@ export async function authFetchApi(
         setToken(newToken);
       } catch (error) {
         logger('log', '[ApiService]-[RefreshToken]-[Error]', error);
-        signOut();
+        signOutCallBack();
       }
     }
   }

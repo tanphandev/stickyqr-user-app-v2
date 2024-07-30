@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 
-import { translate } from '@/core';
+import { translate } from '@/core/i18n/utils';
 import { FocusAwareStatusBar } from '@/ui';
 
 export default function ScanQrScreen() {

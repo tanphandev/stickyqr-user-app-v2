@@ -8,13 +8,15 @@ import FlashMessage from 'react-native-flash-message';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { APIProvider } from '@/api/common';
-import { hydrateAuth, loadSelectedTheme } from '@/core';
-import { useThemeConfig } from '@/core/use-theme-config';
 
 export { ErrorBoundary } from 'expo-router';
 
 // Import  global CSS file
 import '../../global.css';
+
+import { hydrateAuth } from '@/core/auth';
+import { loadSelectedTheme } from '@/core/hooks';
+import { useThemeConfig } from '@/core/hooks/use-theme-config';
 
 export const unstable_settings = {
   initialRouteName: '(app)',

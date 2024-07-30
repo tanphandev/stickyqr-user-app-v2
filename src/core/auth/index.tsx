@@ -1,8 +1,10 @@
 import { create } from 'zustand';
 
-import type { Profile } from '@/api/auth';
-import { getProfile } from '@/api/auth/use-profile';
+import { API_PATH } from '@/api/auth/path';
+import type { Profile } from '@/api/auth/type';
+import { fetchVerifyToken } from '@/api/common/fetch-verify-token';
 import { logger } from '@/helper';
+import { CustomError } from '@/types/common.type';
 
 import { createSelectors } from '../utils';
 import type { TokenType } from './utils';
@@ -18,7 +20,7 @@ interface AuthState {
   userData: Profile | null;
   token: TokenType | null;
   status: AuthStatus;
-  signIn: (data: TokenType, userData: Profile) => void;
+  signIn: (data: TokenType, userData: Profile | null) => void;
   signOut: () => void;
   hydrate: () => void;
 }
@@ -39,9 +41,19 @@ const _useAuth = create<AuthState>((set, get) => ({
     try {
       const userToken = getToken();
       if (userToken !== null) {
-        const userData = await getProfile();
+        const response = await fetchVerifyToken(
+          API_PATH.PROFILE,
+          get().signOut
+        );
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new CustomError(errorData?.message, response?.status);
+        }
+        const userData = await response.json();
+        logger('log', '[ApiService]-[GetProfile]-[Data]', userData);
         if (userData) {
-          get().signIn(userToken, userData);
+          const updateToken = getToken();
+          get().signIn(updateToken, userData);
         }
       } else {
         get().signOut();

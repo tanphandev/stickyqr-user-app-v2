@@ -1,4 +1,4 @@
-import { getItem, removeItem, setItem } from '@/core/storage';
+import { getItem, removeItem, setItem } from '@/core/storage/storage';
 
 const TOKEN = 'token';
 

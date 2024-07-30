@@ -5,7 +5,8 @@ import { Item } from '@/components/settings/item';
 import { ItemsContainer } from '@/components/settings/items-container';
 import { LanguageItem } from '@/components/settings/language-item';
 import { ThemeItem } from '@/components/settings/theme-item';
-import { translate, useAuth } from '@/core';
+import { useAuth } from '@/core/auth';
+import { translate } from '@/core/i18n/utils';
 import { FocusAwareStatusBar, View } from '@/ui';
 
 export default function AccountScreen() {
