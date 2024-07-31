@@ -16,6 +16,7 @@
   },
   "ERROR_MESSAGE": {
     "PASSWORD_REQUIRED": "Mật khẩu là bắt buộc",
+    "PHONE_OR_PASSWORD_INVALID": "Số điện thoại hoặc mật khẩu không hợp lệ!",
     "PHONE_REQUIRED": "Số điện thoại là bắt buộc",
     "SIGN_UP_WHEN_SCAN_QR": "Bạn chỉ có thể đăng ký khi quét mã QR để nhận phần thưởng từ Cửa hàng tham gia. Cảm ơn."
   },

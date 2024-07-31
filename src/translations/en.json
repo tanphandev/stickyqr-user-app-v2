@@ -16,6 +16,7 @@
   },
   "ERROR_MESSAGE": {
     "PASSWORD_REQUIRED": "Password is required",
+    "PHONE_OR_PASSWORD_INVALID": "Invalid Phone number or Password!",
     "PHONE_REQUIRED": "Phone number is required",
     "SIGN_UP_WHEN_SCAN_QR": "You can sign up when scanning a QR code for rewards from a participating business. Thank you."
   },

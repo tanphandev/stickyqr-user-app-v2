@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { Text, View } from 'react-native';
+import Toast from 'react-native-toast-message';
 
 import { useGetProfile, useLogin } from '@/api/auth';
 import type { LoginWithPassword } from '@/api/auth/type';
@@ -44,6 +45,10 @@ function SignInStep({ checkUserData, nextStep }: Props) {
         router.push(PATH.HOME);
       }
     } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: translate('ERROR_MESSAGE.PHONE_OR_PASSWORD_INVALID'),
+      });
       logger('log', '[LoginSubmit]-[Error]', error);
     }
   };
