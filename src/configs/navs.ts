@@ -1,7 +1,7 @@
 const PATH = {
   ONBOARDING: '/onboarding',
   HOME: '/',
-  LOGIN: '/login',
+  GET_STARTED: '/get-started',
 };
 
 export default PATH;

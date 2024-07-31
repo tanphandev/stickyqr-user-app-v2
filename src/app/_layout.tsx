@@ -14,6 +14,7 @@ export { ErrorBoundary } from 'expo-router';
 // Import  global CSS file
 import '../../global.css';
 
+import PATH from '@/configs/navs';
 import { hydrateAuth } from '@/core/auth';
 import { loadSelectedTheme } from '@/core/hooks';
 import { useThemeConfig } from '@/core/hooks/use-theme-config';
@@ -39,10 +40,13 @@ function RootLayoutNav() {
       <Stack>
         <Stack.Screen name="(app)" options={{ headerShown: false }} />
         <Stack.Screen
-          name="(auth)/onboarding"
+          name={'(auth)' + PATH.ONBOARDING}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="(auth)/login" options={{ headerShown: false }} />
+        <Stack.Screen
+          name={'(auth)' + PATH.GET_STARTED}
+          options={{ headerShown: false }}
+        />
       </Stack>
     </Providers>
   );

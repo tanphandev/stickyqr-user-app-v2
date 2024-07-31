@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ============================== CUSTOM CLASSES ============================== */
+
+@layer base {
+  :root {
+    --primary: ##ff4f0f;
+
+    --red-ff0: #ff0000;
+
+    --gray-ebe: ##ebebeb;
+  }
+}
+
+@layer components {
+  .error-message-form {
+    @apply !mt-1 text-xs font-light text-red-ff0;
+  }
+}

@@ -1,3 +1,16 @@
+export interface CheckUserDto {
+  code: string;
+}
+
+export interface CheckUser {
+  id: string;
+  displayName: string;
+  firstName: string | null;
+  lastName: string | null;
+  email: string | null;
+  isSetPassword: boolean;
+}
+
 export interface LoginWithPasswordDto {
   username: string;
   password: string;

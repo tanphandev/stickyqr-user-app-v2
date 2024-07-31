@@ -10,6 +10,7 @@ import ScanQrRegular from 'assets/navigation/scan-qr-regular.svg';
 import { Redirect, SplashScreen, Tabs } from 'expo-router';
 import React, { useCallback, useEffect } from 'react';
 
+import PATH from '@/configs/navs';
 import { useAuth } from '@/core/auth';
 import { useIsFirstTime } from '@/core/hooks';
 import { translate } from '@/core/i18n/utils';
@@ -29,10 +30,10 @@ export default function TabLayout() {
   }, [hideSplash, status]);
 
   if (isFirstTime) {
-    return <Redirect href="/onboarding" />;
+    return <Redirect href={PATH.ONBOARDING} />;
   }
   if (status === 'signOut') {
-    return <Redirect href="/login" />;
+    return <Redirect href={PATH.GET_STARTED} />;
   }
   return (
     <Tabs>

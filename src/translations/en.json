@@ -4,7 +4,20 @@
     "ACCOUNT_SCREEN": "Account screen"
   },
   "AUTH": {
+    "ENTER_YOUR_PHONE_NUMBER": "Please enter your phone number to get started",
+    "FORGOT_PASSWORD": "Forgot Password?",
+    "NEXT": "Next",
+    "PASSWORD": "Password",
+    "PHONE_NUMBER": "Phone number",
+    "SCAN_QR": "Scan QR",
+    "SIGN_IN": "Sign In",
+    "SIGN_IN_TO_STICKYQR": "Sign in to StickyQR",
     "SIGN_OUT": "Sign out"
+  },
+  "ERROR_MESSAGE": {
+    "PASSWORD_REQUIRED": "Password is required",
+    "PHONE_REQUIRED": "Phone number is required",
+    "SIGN_UP_WHEN_SCAN_QR": "You can sign up when scanning a QR code for rewards from a participating business. Thank you."
   },
   "HOME": {
     "HOME_SCREEN": "Home screen"
