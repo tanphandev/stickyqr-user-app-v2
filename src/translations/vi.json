@@ -7,15 +7,18 @@
     "ENTER_YOUR_PHONE_NUMBER": "Vui lòng nhập số điện thoại của bạn để bắt đầu",
     "FORGOT_PASSWORD": "Quên mật khẩu?",
     "NEXT": "Tiếp theo",
+    "NOT_FOUND": "Không tìm thấy",
     "PASSWORD": "Mật khẩu",
     "PHONE_NUMBER": "Số điện thoại",
     "SCAN_QR": "Quét mã",
+    "SELECT": "Chọn",
     "SIGN_IN": "Đăng nhập",
     "SIGN_IN_TO_STICKYQR": "Đăng nhập vào StickyQR",
     "SIGN_OUT": "Đăng xuất"
   },
   "ERROR_MESSAGE": {
     "PASSWORD_REQUIRED": "Mật khẩu là bắt buộc",
+    "PHONE_INVALID": "Số điện thoại không hợp lệ",
     "PHONE_OR_PASSWORD_INVALID": "Số điện thoại hoặc mật khẩu không hợp lệ!",
     "PHONE_REQUIRED": "Số điện thoại là bắt buộc",
     "SIGN_UP_WHEN_SCAN_QR": "Bạn chỉ có thể đăng ký khi quét mã QR để nhận phần thưởng từ Cửa hàng tham gia. Cảm ơn."

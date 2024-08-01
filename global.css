@@ -15,7 +15,7 @@
 }
 
 @layer components {
-  .error-message-form {
+  .error-message {
     @apply !mt-1 text-xs font-light text-red-ff0;
   }
 }

@@ -82,7 +82,7 @@ function PhoneForm({
             name="phone"
           />
           {errors.phone?.message && (
-            <Text className="error-message-form">
+            <Text className="error-message">
               {translate(`ERROR_MESSAGE.${errors.phone?.message}` as TxKeyPath)}
             </Text>
           )}
@@ -105,7 +105,7 @@ function PhoneForm({
             name="password"
           />
           {errors.password?.message && (
-            <Text className="error-message-form">
+            <Text className="error-message">
               {translate(
                 `ERROR_MESSAGE.${errors.password?.message}` as TxKeyPath
               )}

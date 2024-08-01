@@ -1,8 +1,9 @@
+import React from 'react';
 import { Text, View } from 'react-native';
 
 function SetPasswordStep() {
   return (
-    <View>
+    <View className="flex h-full items-center">
       <Text>Set Password</Text>
     </View>
   );

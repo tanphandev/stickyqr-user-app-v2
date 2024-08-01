@@ -6,7 +6,8 @@ import type { CheckUser } from '@/api/auth/type';
 import { useCheckPhone } from '@/api/auth/use-check-phone';
 import { translate } from '@/core/i18n/utils';
 import { logger } from '@/helper';
-import { AuthStepList, type CheckUserData } from '@/types/auth';
+import { AuthStepList } from '@/types/auth';
+import { type CheckUserData } from '@/types/auth';
 import type { PhoneFormSchemaType } from '@/ui/form/phone-form';
 import PhoneForm from '@/ui/form/phone-form';
 
@@ -15,6 +16,8 @@ type Props = {
   nextStep: (step: AuthStepList) => void;
   setCheckUserData: (data: CheckUserData) => void;
 };
+
+// eslint-disable-next-line max-lines-per-function
 function CheckPhoneStep({ checkUserData, nextStep, setCheckUserData }: Props) {
   // state
   const [errorMessage, setErrorMessage] = React.useState<string>('');
@@ -24,6 +27,7 @@ function CheckPhoneStep({ checkUserData, nextStep, setCheckUserData }: Props) {
 
   /* onSubmit */
   const onSubmit = async (data: PhoneFormSchemaType) => {
+    console.log('number', data.phone);
     try {
       const user: CheckUser = await checkPhone({
         phone: data.phone,
@@ -49,6 +53,25 @@ function CheckPhoneStep({ checkUserData, nextStep, setCheckUserData }: Props) {
       logger('log', '[ApiService]-[CheckPhone]-[Error]', error);
     }
   };
+  // const onSubmit = (data: any, selectedCountry: any) => {
+  //   try {
+  //     const number = phoneUtil.parse(data.phoneNumber, selectedCountry.isoCode);
+  //     const isValidNumber = phoneUtil.isValidNumber(number);
+  //     const formatted = phoneUtil.format(
+  //       number,
+  //       PhoneNumberFormat.INTERNATIONAL
+  //     );
+
+  //     if (isValidNumber) {
+  //       alert(`Valid Number: ${formatted}`);
+  //     } else {
+  //       alert('Invalid Number');
+  //     }
+  //   } catch (error) {
+  //     alert('Error parsing phone number');
+  //     console.error('Error parsing phone number:', error);
+  //   }
+  // };
 
   /* onScanQR */
   const onScanQR = () => {};
