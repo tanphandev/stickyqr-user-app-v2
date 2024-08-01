@@ -1,3 +1,4 @@
+import LanguageIcon from 'assets/account/language.svg';
 import * as React from 'react';
 
 import { useSelectedLanguage } from '@/core';
@@ -38,6 +39,7 @@ export const LanguageItem = () => {
         text="SETTING.LANGUAGE"
         value={selectedLanguage?.label}
         onPress={modal.present}
+        icon={<LanguageIcon />}
       />
       <Options
         ref={modal.ref}

@@ -1,7 +1,15 @@
 {
   "ACCOUNT": {
     "ACCOUNT": "Account",
-    "ACCOUNT_SCREEN": "Account screen"
+    "ACCOUNT_SCREEN": "Account screen",
+    "HISTORY": " History",
+    "LANGUAGE": "Language",
+    "MANAGE_ACCOUNT": "Manage account",
+    "MY_VOUCHERS": "My Vouchers",
+    "NOTIFICATONS": "Notifications",
+    "PERSONAL_INFORMATION": "Personal information",
+    "REFER_AND_EARN": "Refer & Earn",
+    "SETTING": "Setting"
   },
   "AUTH": {
     "SIGN_OUT": "Sign out"

@@ -1,7 +1,15 @@
 {
   "ACCOUNT": {
     "ACCOUNT": "Tài khoản",
-    "ACCOUNT_SCREEN": "Tài khoản"
+    "ACCOUNT_SCREEN": "Tài khoản",
+    "HISTORY": "Lịch sử",
+    "LANGUAGE": "Ngôn ngữ",
+    "MANAGE_ACCOUNT": "Quản lý tài khoản",
+    "MY_VOUCHERS": "Vouchers của tôi",
+    "NOTIFICATONS": "Thông báo",
+    "PERSONAL_INFORMATION": "Thông tin cá nhân",
+    "REFER_AND_EARN": "Giới thiệu & nhận thưởng",
+    "SETTING": "Cài đặt"
   },
   "AUTH": {
     "SIGN_OUT": "Đăng xuất"
