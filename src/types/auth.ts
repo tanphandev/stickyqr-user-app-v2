@@ -6,6 +6,7 @@ export type CheckUserData = {
   isSetPassword?: boolean;
   lastName?: string | null;
   phone?: string;
+  phoneCode?: string;
 };
 
 export const enum AuthStepList {

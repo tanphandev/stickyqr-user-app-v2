@@ -1,12 +1,13 @@
 import clsx from 'clsx';
 import React from 'react';
-import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
+import type { Country } from '@/configs/country';
 import { ERROR_KEY } from '@/constants/error-key';
 import { Button, View } from '@/ui';
 
+import type { PhoneInputRef } from '../phone-input';
 import PhoneInput from '../phone-input';
 
 const phoneFormSchema = z.object({
@@ -26,7 +27,7 @@ type Props = {
   secondaryButtonClassName?: string;
   errorApi?: string;
   setApiError?: (error: string) => void;
-  onSubmit: SubmitHandler<PhoneFormSchemaType>;
+  onSubmit: (data: PhoneFormSchemaType, selectedCountry: Country) => void;
   onScanQR: () => void;
 };
 
@@ -53,6 +54,8 @@ function PhoneForm({
     defaultValues: defaultForm,
   });
 
+  const phoneInputRef = React.useRef<PhoneInputRef>(null);
+
   return (
     <View
       className={clsx(
@@ -62,6 +65,7 @@ function PhoneForm({
     >
       <View>
         <PhoneInput
+          ref={phoneInputRef}
           name="phone"
           control={control}
           phoneError={errors.phone}
@@ -75,7 +79,9 @@ function PhoneForm({
         <Button
           className={submitButtonCalssName}
           label={submitLabel}
-          onPress={handleSubmit(onSubmit)}
+          onPress={handleSubmit((data) => {
+            onSubmit(data, phoneInputRef.current?.selectedCountry!);
+          })}
           textClassName="font-normal"
         />
         <Button

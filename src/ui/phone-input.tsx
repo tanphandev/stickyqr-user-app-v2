@@ -5,7 +5,7 @@ import XmarkBlack from 'assets/actions/xmark-black-icon.svg';
 import XmarkIcon from 'assets/actions/xmark-gray-icon.svg';
 import clsx from 'clsx';
 import { PhoneNumberUtil } from 'google-libphonenumber';
-import React, { useState } from 'react';
+import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import {
   FlatList,
@@ -27,6 +27,10 @@ import RadioButton from './radio-button';
 
 const phoneUtil = PhoneNumberUtil.getInstance();
 
+export type PhoneInputRef = {
+  selectedCountry: Country;
+};
+
 type Props = {
   phoneLabel: string;
   phonePlaceholder?: string;
@@ -36,42 +40,26 @@ type Props = {
   errorApi?: string;
   clearErrorApi?: (error: string) => void;
 };
+
 // eslint-disable-next-line max-lines-per-function
-const PhoneInput = ({
-  phoneLabel,
-  phonePlaceholder,
-  name,
-  control,
-  phoneError,
-  errorApi,
-  clearErrorApi,
-}: Props) => {
+const PhoneInput = forwardRef<PhoneInputRef, Props>(function Component(
+  {
+    phoneLabel,
+    phonePlaceholder,
+    name,
+    control,
+    phoneError,
+    errorApi,
+    clearErrorApi,
+  },
+  ref
+) {
   const [selectedCountry, setSelectedCountry] = useState<Country>(
     countryList[0]
   );
   const [modalVisible, setModalVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isFocused, setIsFocused] = useState(false);
-
-  // const onSubmit = (data: any) => {
-  //   try {
-  //     const number = phoneUtil.parse(data.phoneNumber, selectedCountry.isoCode);
-  //     const isValidNumber = phoneUtil.isValidNumber(number);
-  //     const formatted = phoneUtil.format(
-  //       number,
-  //       PhoneNumberFormat.INTERNATIONAL
-  //     );
-
-  //     if (isValidNumber) {
-  //       alert(`Valid Number: ${formatted}`);
-  //     } else {
-  //       alert('Invalid Number');
-  //     }
-  //   } catch (error) {
-  //     alert('Error parsing phone number');
-  //     console.error('Error parsing phone number:', error);
-  //   }
-  // };
 
   const renderItem = ({ item }: { item: Country }) => (
     <Pressable
@@ -107,6 +95,9 @@ const PhoneInput = ({
       country.phoneCode.replaceAll('-', '').startsWith(normalizedSearchQuery)
   );
 
+  useImperativeHandle(ref, () => ({
+    selectedCountry,
+  }));
   return (
     <View>
       <Text className="mb-4 text-base font-light">{phoneLabel}</Text>
@@ -247,6 +238,6 @@ const PhoneInput = ({
       </Modal>
     </View>
   );
-};
+});
 
 export default PhoneInput;

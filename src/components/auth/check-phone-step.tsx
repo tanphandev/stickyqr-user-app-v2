@@ -4,6 +4,7 @@ import { Text, View } from 'react-native';
 
 import type { CheckUser } from '@/api/auth/type';
 import { useCheckPhone } from '@/api/auth/use-check-phone';
+import type { Country } from '@/configs/country';
 import { translate } from '@/core/i18n/utils';
 import { logger } from '@/helper';
 import { AuthStepList } from '@/types/auth';
@@ -26,20 +27,25 @@ function CheckPhoneStep({ checkUserData, nextStep, setCheckUserData }: Props) {
   const { mutateAsync: checkPhone } = useCheckPhone();
 
   /* onSubmit */
-  const onSubmit = async (data: PhoneFormSchemaType) => {
-    console.log('number', data.phone);
+  const onSubmit = async (
+    data: PhoneFormSchemaType,
+    countrySelected: Country
+  ) => {
+    const userPhone = '+' + countrySelected.phoneCode + data.phone;
+
     try {
       const user: CheckUser = await checkPhone({
-        phone: data.phone,
+        phone: userPhone,
       });
       logger('log', '[ApiService]-[CheckPhone]-[Data]', user);
       if (user) {
         setCheckUserData({
           ...user,
           phone: data.phone,
+          phoneCode: countrySelected.phoneCode,
         });
       }
-      if (!user.isSetPassword) {
+      if (user.isSetPassword) {
         nextStep(AuthStepList.SetPassword);
       } else {
         nextStep(AuthStepList.SignIn);
@@ -53,25 +59,6 @@ function CheckPhoneStep({ checkUserData, nextStep, setCheckUserData }: Props) {
       logger('log', '[ApiService]-[CheckPhone]-[Error]', error);
     }
   };
-  // const onSubmit = (data: any, selectedCountry: any) => {
-  //   try {
-  //     const number = phoneUtil.parse(data.phoneNumber, selectedCountry.isoCode);
-  //     const isValidNumber = phoneUtil.isValidNumber(number);
-  //     const formatted = phoneUtil.format(
-  //       number,
-  //       PhoneNumberFormat.INTERNATIONAL
-  //     );
-
-  //     if (isValidNumber) {
-  //       alert(`Valid Number: ${formatted}`);
-  //     } else {
-  //       alert('Invalid Number');
-  //     }
-  //   } catch (error) {
-  //     alert('Error parsing phone number');
-  //     console.error('Error parsing phone number:', error);
-  //   }
-  // };
 
   /* onScanQR */
   const onScanQR = () => {};
