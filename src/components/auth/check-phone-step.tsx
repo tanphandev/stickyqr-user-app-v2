@@ -4,9 +4,10 @@ import { Text, View } from 'react-native';
 
 import type { CheckUser } from '@/api/auth/type';
 import { useCheckPhone } from '@/api/auth/use-check-phone';
-import type { Country } from '@/configs/country';
+import { type Country } from '@/configs/country';
 import { translate } from '@/core/i18n/utils';
 import { logger } from '@/helper';
+import { findCountry } from '@/helper/country';
 import { AuthStepList } from '@/types/auth';
 import { type CheckUserData } from '@/types/auth';
 import type { PhoneFormSchemaType } from '@/ui/form/phone-form';
@@ -43,9 +44,10 @@ function CheckPhoneStep({ checkUserData, nextStep, setCheckUserData }: Props) {
           ...user,
           phone: data.phone,
           phoneCode: countrySelected.phoneCode,
+          isoCode: countrySelected.isoCode,
         });
       }
-      if (user.isSetPassword) {
+      if (!user.isSetPassword) {
         nextStep(AuthStepList.SetPassword);
       } else {
         nextStep(AuthStepList.SignIn);
@@ -79,6 +81,10 @@ function CheckPhoneStep({ checkUserData, nextStep, setCheckUserData }: Props) {
         phonePlaceholder={translate('AUTH.PHONE_NUMBER')}
         submitLabel={translate('AUTH.NEXT')}
         scanLabel={translate('AUTH.SCAN_QR')}
+        defaultCountry={findCountry(
+          checkUserData?.isoCode!,
+          checkUserData?.phoneCode!
+        )}
         errorApi={errorMessage}
         setApiError={setErrorMessage}
         containterClassName="px-8"

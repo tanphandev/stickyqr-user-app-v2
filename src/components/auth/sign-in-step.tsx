@@ -5,13 +5,15 @@ import Toast from 'react-native-toast-message';
 
 import { useGetProfile, useLogin } from '@/api/auth';
 import type { LoginWithPassword } from '@/api/auth/type';
+import type { Country } from '@/configs/country';
 import PATH from '@/configs/navs';
 import { useAuth } from '@/core/auth';
 import { setToken } from '@/core/auth/utils';
 import { translate } from '@/core/i18n';
 import { logger } from '@/helper';
+import { findCountry } from '@/helper/country';
 import type { CheckUserData } from '@/types/auth';
-import type { PhonePasswordFormSchemaType } from '@/ui/form/phone-password-form';
+import type { PhonePasswordFormType } from '@/ui/form/phone-password-form';
 import PhonePasswordForm from '@/ui/form/phone-password-form';
 
 type Props = {
@@ -24,10 +26,14 @@ function SignInStep({ checkUserData, nextStep }: Props) {
   const signIn = useAuth.use.signIn();
   const { mutateAsync: login } = useLogin();
   const { mutateAsync: getProfile } = useGetProfile();
-  const onSubmit = async (data: PhonePasswordFormSchemaType) => {
+  const onSubmit = async (
+    data: PhonePasswordFormType,
+    countrySelected: Country
+  ) => {
+    const userPhone = '+' + countrySelected.phoneCode + data.phone;
     try {
       const loginData: LoginWithPassword = await login({
-        phone: data.phone,
+        phone: userPhone,
         password: data.password,
       });
 
@@ -66,6 +72,11 @@ function SignInStep({ checkUserData, nextStep }: Props) {
         phonePlaceholder={translate('AUTH.PHONE_NUMBER')}
         passwordLabel={translate('AUTH.PASSWORD')}
         passwordPlaceholder={translate('AUTH.PASSWORD')}
+        defaultCountry={findCountry(
+          checkUserData.isoCode,
+          checkUserData.phoneCode
+        )}
+        allowEditPhone={false}
         submitLabel={translate('AUTH.NEXT')}
         containterClassName="px-8"
         submitButtonClassName="h-12 mt-0 mb-10 rounded-lg bg-primary"

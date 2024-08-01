@@ -7,6 +7,7 @@ export type CheckUserData = {
   lastName?: string | null;
   phone?: string;
   phoneCode?: string;
+  isoCode?: string;
 };
 
 export const enum AuthStepList {

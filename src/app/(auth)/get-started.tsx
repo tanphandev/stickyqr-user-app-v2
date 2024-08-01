@@ -9,6 +9,7 @@ import { useSoftKeyboardEffect } from '@/core/keyboard';
 import { AuthStepList, type CheckUserData } from '@/types/auth';
 import { FocusAwareStatusBar, Pressable, View } from '@/ui';
 
+// eslint-disable-next-line max-lines-per-function
 export default function GetStarted() {
   // state
   const [currentStep, setCurrentStep] = useState<AuthStepList>(
@@ -43,7 +44,13 @@ export default function GetStarted() {
           <SignInStep nextStep={nextStep} checkUserData={checkUserData!} />
         );
       case AuthStepList.ForgotPassword:
-        return <ForgotPasswordStep />;
+        return (
+          <ForgotPasswordStep
+            checkUserData={checkUserData}
+            setCheckUserData={setCheckUserData}
+            nextStep={nextStep}
+          />
+        );
       case AuthStepList.SetPassword:
         return <SetPasswordStep />;
       default:

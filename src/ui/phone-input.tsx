@@ -19,6 +19,7 @@ import {
 
 import type { Country } from '@/configs/country';
 import { countryList } from '@/configs/country';
+import { defaultCountry as dfCountry } from '@/configs/country';
 import { ERROR_KEY } from '@/constants/error-key';
 import type { TxKeyPath } from '@/core/i18n';
 import { translate } from '@/core/i18n';
@@ -35,7 +36,9 @@ type Props = {
   phoneLabel: string;
   phonePlaceholder?: string;
   name: string;
+  defaultCountry: Country | null;
   control: any;
+  allowEditPhone?: boolean;
   phoneError: any;
   errorApi?: string;
   clearErrorApi?: (error: string) => void;
@@ -47,7 +50,9 @@ const PhoneInput = forwardRef<PhoneInputRef, Props>(function Component(
     phoneLabel,
     phonePlaceholder,
     name,
+    defaultCountry,
     control,
+    allowEditPhone = true,
     phoneError,
     errorApi,
     clearErrorApi,
@@ -55,7 +60,7 @@ const PhoneInput = forwardRef<PhoneInputRef, Props>(function Component(
   ref
 ) {
   const [selectedCountry, setSelectedCountry] = useState<Country>(
-    countryList[0]
+    defaultCountry || dfCountry
   );
   const [modalVisible, setModalVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -100,7 +105,7 @@ const PhoneInput = forwardRef<PhoneInputRef, Props>(function Component(
   }));
   return (
     <View>
-      <Text className="mb-4 text-base font-light">{phoneLabel}</Text>
+      <Text className="mb-2 text-base font-light">{phoneLabel}</Text>
       <View
         className={clsx(
           'flex-row items-center rounded-xl border border-gray-ebe',
@@ -112,7 +117,12 @@ const PhoneInput = forwardRef<PhoneInputRef, Props>(function Component(
       >
         <TouchableOpacity
           className="flex-row items-center pl-3"
-          onPress={() => setModalVisible(true)}
+          onPress={() => {
+            if (allowEditPhone) {
+              setModalVisible(true);
+            }
+          }}
+          disabled={!allowEditPhone}
         >
           <Text className="text-2xl">{selectedCountry.flag}</Text>
           <Text className="ml-1 text-lg">
@@ -155,12 +165,17 @@ const PhoneInput = forwardRef<PhoneInputRef, Props>(function Component(
                     onChange(value);
                     clearErrorApi?.('');
                   }}
-                  onFocus={() => setIsFocused(true)}
+                  onFocus={() => {
+                    if (allowEditPhone) {
+                      setIsFocused(true);
+                    }
+                  }}
                   value={value}
                   placeholder={phonePlaceholder}
+                  editable={allowEditPhone}
                   keyboardType="phone-pad"
                 />
-                {value.length > 0 && (
+                {value.length > 0 && allowEditPhone && (
                   <Pressable onPress={() => onChange('')} className="pl-1 pr-2">
                     <XmarkIcon width={24} height={24} />
                   </Pressable>

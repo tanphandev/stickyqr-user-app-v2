@@ -2774,3 +2774,7 @@ export const countryList: Country[] = [
     phoneCode: '258',
   },
 ];
+
+export const defaultCountry = countryList.find(
+  (country) => country.isoCode === 'US' && country.phoneCode === '1'
+) as Country;

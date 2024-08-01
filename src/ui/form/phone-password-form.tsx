@@ -1,44 +1,45 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import clsx from 'clsx';
 import React from 'react';
-import type { SubmitHandler } from 'react-hook-form';
 import { Controller, useForm } from 'react-hook-form';
 import { Pressable, Text, TextInput } from 'react-native';
-import * as z from 'zod';
 
+import type { Country } from '@/configs/country';
 import { ERROR_KEY } from '@/constants/error-key';
 import { translate, type TxKeyPath } from '@/core/i18n';
 import { AuthStepList } from '@/types/auth';
 import { Button, View } from '@/ui';
 
-const phonePasswordFormSchema = z.object({
-  phone: z.string().min(1, { message: ERROR_KEY.PHONE_REQUIRED }),
-  password: z.string().min(1, { message: ERROR_KEY.PASSWORD_REQUIRED }),
-});
+import type { PhoneInputRef } from '../phone-input';
+import PhoneInput from '../phone-input';
 
-export type PhonePasswordFormSchemaType = z.infer<
-  typeof phonePasswordFormSchema
->;
+export type PhonePasswordFormType = {
+  phone: string;
+  password: string;
+};
 
 type Props = {
   phoneLabel: string;
   phonePlaceholder?: string;
   passwordLabel: string;
   passwordPlaceholder?: string;
+  defaultForm: PhonePasswordFormType;
+  defaultCountry: Country | null;
+  allowEditPhone?: boolean;
   submitLabel?: string;
   containterClassName?: string;
   submitButtonClassName?: string;
-  defaultForm: PhonePasswordFormSchemaType;
   nextStep: (step: AuthStepList) => void;
-  onSubmit: SubmitHandler<PhonePasswordFormSchemaType>;
+  onSubmit: (data: PhonePasswordFormType, countrySelected: Country) => void;
 };
 
 // eslint-disable-next-line max-lines-per-function
-function PhoneForm({
+function PhonePasswordForm({
   phoneLabel,
   phonePlaceholder,
   passwordLabel,
   passwordPlaceholder,
+  defaultCountry,
+  allowEditPhone,
   submitLabel,
   containterClassName,
   submitButtonClassName,
@@ -50,12 +51,13 @@ function PhoneForm({
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<PhonePasswordFormSchemaType>({
+  } = useForm<PhonePasswordFormType>({
     mode: 'onChange',
-    resolver: zodResolver(phonePasswordFormSchema),
     defaultValues: defaultForm,
   });
+  const phoneInputRef = React.useRef<PhoneInputRef>(null);
 
+  const [showPassword, setShowPassword] = React.useState(false);
   return (
     <View
       className={clsx(
@@ -65,44 +67,54 @@ function PhoneForm({
     >
       <View className="">
         <View className="mb-6">
-          <Text className="mb-2 text-base font-light">{phoneLabel}</Text>
-          <Controller
-            control={control}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                value={value}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                className={clsx('h-12 rounded-lg border border-gray-ebe px-4', {
-                  'border-red-ff0': errors.phone?.message,
-                })}
-                placeholder={phonePlaceholder}
-              />
-            )}
+          <PhoneInput
+            ref={phoneInputRef}
             name="phone"
+            control={control}
+            phoneError={errors.phone}
+            phoneLabel={phoneLabel}
+            phonePlaceholder={phonePlaceholder}
+            defaultCountry={defaultCountry}
+            allowEditPhone={allowEditPhone}
           />
-          {errors.phone?.message && (
-            <Text className="error-message">
-              {translate(`ERROR_MESSAGE.${errors.phone?.message}` as TxKeyPath)}
-            </Text>
-          )}
         </View>
         <View>
           <Text className="mb-2 text-base font-light">{passwordLabel}</Text>
           <Controller
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                value={value}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                className={clsx('h-12 rounded-lg border border-gray-ebe px-4', {
-                  'border-red-ff0': errors.password?.message,
-                })}
-                placeholder={passwordPlaceholder}
-              />
+              <View
+                className={clsx(
+                  'flex h-12 flex-row items-center justify-between rounded-lg border border-gray-ebe px-4',
+                  {
+                    'border-red-ff0': errors.password?.message,
+                  }
+                )}
+              >
+                <TextInput
+                  value={value}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  className={'flex-1'}
+                  placeholder={passwordPlaceholder}
+                  secureTextEntry={!showPassword}
+                />
+                {
+                  <Pressable
+                    onPress={() => setShowPassword(!showPassword)}
+                    className=""
+                  >
+                    <Text className="text-lg">
+                      {showPassword ? 'Show' : 'Hide'}
+                    </Text>
+                  </Pressable>
+                }
+              </View>
             )}
             name="password"
+            rules={{
+              required: ERROR_KEY.PASSWORD_REQUIRED,
+            }}
           />
           {errors.password?.message && (
             <Text className="error-message">
@@ -127,7 +139,9 @@ function PhoneForm({
         <Button
           className={submitButtonClassName}
           label={submitLabel}
-          onPress={handleSubmit(onSubmit)}
+          onPress={handleSubmit((data) => {
+            onSubmit(data, phoneInputRef.current?.selectedCountry!);
+          })}
           textClassName="font-normal"
         />
       </View>
@@ -135,4 +149,4 @@ function PhoneForm({
   );
 }
 
-export default PhoneForm;
+export default PhonePasswordForm;

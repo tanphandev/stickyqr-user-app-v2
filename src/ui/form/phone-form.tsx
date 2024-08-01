@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
 import type { Country } from '@/configs/country';
+import { defaultCountry as dfCountry } from '@/configs/country';
 import { ERROR_KEY } from '@/constants/error-key';
 import { Button, View } from '@/ui';
 
@@ -22,13 +23,14 @@ type Props = {
   submitLabel?: string;
   scanLabel?: string;
   defaultForm: PhoneFormSchemaType;
+  defaultCountry: Country | null;
   containterClassName?: string;
   submitButtonCalssName?: string;
   secondaryButtonClassName?: string;
   errorApi?: string;
   setApiError?: (error: string) => void;
   onSubmit: (data: PhoneFormSchemaType, selectedCountry: Country) => void;
-  onScanQR: () => void;
+  onScanQR?: () => void;
 };
 
 function PhoneForm({
@@ -37,6 +39,7 @@ function PhoneForm({
   submitLabel,
   scanLabel,
   defaultForm,
+  defaultCountry = dfCountry,
   containterClassName,
   submitButtonCalssName,
   secondaryButtonClassName,
@@ -50,7 +53,7 @@ function PhoneForm({
     control,
     formState: { errors },
   } = useForm<PhoneFormSchemaType>({
-    mode: 'all',
+    mode: 'onChange',
     defaultValues: defaultForm,
   });
 
@@ -71,6 +74,7 @@ function PhoneForm({
           phoneError={errors.phone}
           phoneLabel={phoneLabel}
           phonePlaceholder={phonePlaceholder}
+          defaultCountry={defaultCountry}
           errorApi={errorApi}
           clearErrorApi={setApiError}
         />
@@ -84,12 +88,14 @@ function PhoneForm({
           })}
           textClassName="font-normal"
         />
-        <Button
-          className={secondaryButtonClassName}
-          label={scanLabel}
-          textClassName="text-black font-normal"
-          onPress={onScanQR}
-        />
+        {onScanQR && (
+          <Button
+            className={secondaryButtonClassName}
+            label={scanLabel}
+            textClassName="text-black font-normal"
+            onPress={onScanQR}
+          />
+        )}
       </View>
     </View>
   );
