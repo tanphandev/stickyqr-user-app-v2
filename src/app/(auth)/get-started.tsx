@@ -52,7 +52,9 @@ export default function GetStarted() {
           />
         );
       case AuthStepList.SetPassword:
-        return <SetPasswordStep />;
+        return (
+          <SetPasswordStep checkUserData={checkUserData!} nextStep={nextStep} />
+        );
       default:
         return (
           <CheckPhoneStep
@@ -68,7 +70,7 @@ export default function GetStarted() {
       <FocusAwareStatusBar />
       <View className="flex h-full flex-col">
         {prevStep.length > 0 && (
-          <View className="mt-[70px] px-4">
+          <View className="mt-[10px] px-4">
             <Pressable
               onPress={() => {
                 setCurrentStep(prevStep[prevStep.length - 1]);

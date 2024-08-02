@@ -33,6 +33,7 @@ module.exports = {
         'red-ff0': 'var(--red-ff0)',
         'red-ff4': 'var(--red-ff4)',
         'gray-ebe': 'var(--gray-ebe)',
+        'blue-344': 'var(--blue-344)',
       },
     },
   },

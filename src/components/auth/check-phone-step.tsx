@@ -67,7 +67,7 @@ function CheckPhoneStep({ checkUserData, nextStep, setCheckUserData }: Props) {
 
   return (
     <View className="flex h-full flex-col">
-      <View className="mt-[120px] items-center">
+      <View className="mt-[70px] items-center">
         <Logo width={200} height={48} />
       </View>
       <Text className="my-6 text-center text-2xl font-medium">

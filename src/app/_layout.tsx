@@ -2,7 +2,7 @@ import { useReactNavigationDevTools } from '@dev-plugins/react-navigation';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { ThemeProvider } from '@react-navigation/native';
 import { SplashScreen, Stack, useNavigationContainerRef } from 'expo-router';
-import { StyleSheet } from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
 import FlashMessage from 'react-native-flash-message';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
@@ -64,11 +64,13 @@ function Providers({ children }: { children: React.ReactNode }) {
     >
       <ThemeProvider value={theme}>
         <APIProvider>
-          <BottomSheetModalProvider>
-            {children}
-            <FlashMessage position="top" />
-            <Toast config={toastConfig} />
-          </BottomSheetModalProvider>
+          <SafeAreaView className="flex-1">
+            <BottomSheetModalProvider>
+              {children}
+              <FlashMessage position="top" />
+              <Toast config={toastConfig} />
+            </BottomSheetModalProvider>
+          </SafeAreaView>
         </APIProvider>
       </ThemeProvider>
     </GestureHandlerRootView>

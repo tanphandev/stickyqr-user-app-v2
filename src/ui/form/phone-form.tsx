@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 import * as z from 'zod';
 
 import type { Country } from '@/configs/country';
@@ -33,6 +34,7 @@ type Props = {
   onScanQR?: () => void;
 };
 
+// eslint-disable-next-line max-lines-per-function
 function PhoneForm({
   phoneLabel,
   phonePlaceholder,
@@ -60,44 +62,49 @@ function PhoneForm({
   const phoneInputRef = React.useRef<PhoneInputRef>(null);
 
   return (
-    <View
-      className={clsx(
-        'flex flex-1 flex-col justify-between',
-        containterClassName
-      )}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
     >
-      <View>
-        <PhoneInput
-          ref={phoneInputRef}
-          name="phone"
-          control={control}
-          phoneError={errors.phone}
-          phoneLabel={phoneLabel}
-          phonePlaceholder={phonePlaceholder}
-          defaultCountry={defaultCountry}
-          errorApi={errorApi}
-          clearErrorApi={setApiError}
-        />
-      </View>
-      <View>
-        <Button
-          className={submitButtonCalssName}
-          label={submitLabel}
-          onPress={handleSubmit((data) => {
-            onSubmit(data, phoneInputRef.current?.selectedCountry!);
-          })}
-          textClassName="font-normal"
-        />
-        {onScanQR && (
-          <Button
-            className={secondaryButtonClassName}
-            label={scanLabel}
-            textClassName="text-black font-normal"
-            onPress={onScanQR}
-          />
+      <View
+        className={clsx(
+          'flex flex-1 flex-col justify-between',
+          containterClassName
         )}
+      >
+        <View>
+          <PhoneInput
+            ref={phoneInputRef}
+            name="phone"
+            control={control}
+            phoneError={errors.phone}
+            phoneLabel={phoneLabel}
+            phonePlaceholder={phonePlaceholder}
+            defaultCountry={defaultCountry}
+            errorApi={errorApi}
+            clearErrorApi={setApiError}
+          />
+        </View>
+        <View>
+          <Button
+            className={submitButtonCalssName}
+            label={submitLabel}
+            onPress={handleSubmit((data) => {
+              onSubmit(data, phoneInputRef.current?.selectedCountry!);
+            })}
+            textClassName="font-normal"
+          />
+          {onScanQR && (
+            <Button
+              className={secondaryButtonClassName}
+              label={scanLabel}
+              textClassName="text-black font-normal"
+              onPress={onScanQR}
+            />
+          )}
+        </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

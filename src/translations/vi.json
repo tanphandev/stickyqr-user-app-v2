@@ -4,8 +4,16 @@
     "ACCOUNT_SCREEN": "Tài khoản"
   },
   "AUTH": {
+    "CONTINUE": "Tiếp tục",
+    "DIDN'T_RECEIVE_A_CODE": "Không nhận được mã?",
+    "ENTER_THE_CODE_THAT_WAS_CALLED_TO": "Nhập mã xác minh được gọi đến",
+    "ENTER_THE_CODE_WE_SENT_OVER_EMAIL_TO": "Nhập mã xác minh đã được gửi tới email",
+    "ENTER_THE_CODE_WE_SENT_OVER_SMS_TO": "Nhập mã xác minh được gửi qua SMS đến",
+    "ENTER_YOUR_EMAIL_ADDRESS": "Nhập email của bạn",
     "ENTER_YOUR_PHONE_NUMBER": "Vui lòng nhập số điện thoại của bạn để bắt đầu",
     "FORGOT_PASSWORD": "Quên mật khẩu?",
+    "GET_CODE_BY": "Nhận mã bằng cách",
+    "MAKE_A_PHONE_CALL": "Gọi điện thoại",
     "NEXT": "Tiếp theo",
     "NOT_FOUND": "Không tìm thấy",
     "PASSWORD": "Mật khẩu",
@@ -14,7 +22,10 @@
     "SELECT": "Chọn",
     "SIGN_IN": "Đăng nhập",
     "SIGN_IN_TO_STICKYQR": "Đăng nhập vào StickyQR",
-    "SIGN_OUT": "Đăng xuất"
+    "SIGN_OUT": "Đăng xuất",
+    "USE_ANOTHER_METHOD": "Sử dụng một phương thức khác",
+    "VERIFICATION_CODE": "Mã xác nhận",
+    "VERIFY": "Xác minh"
   },
   "ERROR_MESSAGE": {
     "PASSWORD_REQUIRED": "Mật khẩu là bắt buộc",

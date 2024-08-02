@@ -4,8 +4,16 @@
     "ACCOUNT_SCREEN": "Account screen"
   },
   "AUTH": {
+    "CONTINUE": "Continue",
+    "DIDN'T_RECEIVE_A_CODE": "Didn't receive a code?",
+    "ENTER_THE_CODE_THAT_WAS_CALLED_TO": "Enter the code that was called to",
+    "ENTER_THE_CODE_WE_SENT_OVER_EMAIL_TO": "Enter the code we sent over Email to",
+    "ENTER_THE_CODE_WE_SENT_OVER_SMS_TO": "Enter the code we sent over SMS to",
+    "ENTER_YOUR_EMAIL_ADDRESS": "Enter your Email address",
     "ENTER_YOUR_PHONE_NUMBER": "Please enter your phone number to get started",
     "FORGOT_PASSWORD": "Forgot Password?",
+    "GET_CODE_BY": "Get code by",
+    "MAKE_A_PHONE_CALL": "Make a phone call",
     "NEXT": "Next",
     "NOT_FOUND": "Not found",
     "PASSWORD": "Password",
@@ -14,7 +22,10 @@
     "SELECT": "Select",
     "SIGN_IN": "Sign In",
     "SIGN_IN_TO_STICKYQR": "Sign in to StickyQR",
-    "SIGN_OUT": "Sign out"
+    "SIGN_OUT": "Sign out",
+    "USE_ANOTHER_METHOD": "Use another method",
+    "VERIFICATION_CODE": "Verification code",
+    "VERIFY": "Verify"
   },
   "ERROR_MESSAGE": {
     "PASSWORD_REQUIRED": "Password is required",
