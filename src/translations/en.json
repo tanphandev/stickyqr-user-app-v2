@@ -2,14 +2,26 @@
   "ACCOUNT": {
     "ACCOUNT": "Account",
     "ACCOUNT_SCREEN": "Account screen",
+    "ADDRESS": "Address",
+    "EMAIL": "Email",
+    "FEMALE": "Female",
+    "GENDER": "Gender",
     "HISTORY": " History",
     "LANGUAGE": "Language",
+    "MALE": "Male",
     "MANAGE_ACCOUNT": "Manage account",
     "MY_VOUCHERS": "My Vouchers",
     "NOTIFICATONS": "Notifications",
+    "NOT_UPDATED_YET": "Not updated yet",
+    "OTHER": "Other",
+    "PASSWORD": "Password",
     "PERSONAL_INFORMATION": "Personal information",
+    "PHONE_NUMBER": "Phone Number",
     "REFER_AND_EARN": "Refer & Earn",
-    "SETTING": "Setting"
+    "SETTING": "Setting",
+    "TIMEZONE": "Timezone",
+    "YOUR_BIRTHDAY": "Your birthday (we'd love to send you a gift)",
+    "YOUR_NAME": "Your Name"
   },
   "AUTH": {
     "SIGN_OUT": "Sign out"

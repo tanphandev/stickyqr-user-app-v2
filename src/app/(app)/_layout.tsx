@@ -62,7 +62,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="account"
+        name="(account)"
         options={{
           title: translate('MAIN_TABS.ACCOUNT'),
           headerShown: false,

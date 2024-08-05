@@ -4,6 +4,7 @@ import Notification from 'assets/account/notification.svg';
 import PersonIcon from 'assets/account/person.svg';
 import RefIcon from 'assets/account/ref.svg';
 import VoucherIcon from 'assets/account/voucher.svg';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { Image, ScrollView, Text } from 'react-native';
 
@@ -15,8 +16,10 @@ import { FocusAwareStatusBar, Pressable, View } from '@/ui';
 
 export default function AccountScreen() {
   const signOut = useAuth.use.signOut();
+  const router = useRouter();
   const onPressPersonalInformation = () => {
     console.log('go to profile');
+    router.push('/(account)/profile');
   };
   const onPressReferAndEarn = () => {
     console.log('go to ref');
@@ -115,7 +118,7 @@ export default function AccountScreen() {
               title="ACCOUNT.MANAGE_ACCOUNT"
               titleClassName="uppercase font-semibold text-sm leading-[24px]"
               childrenClassName="border-0"
-              containerClassName="mb-6"
+              containerClassName="mb-6 "
             >
               <View>
                 <View className="border-b border-neutral-200 py-2">
@@ -132,20 +135,20 @@ export default function AccountScreen() {
                     icon={<RefIcon />}
                   />
                 </View>
-              </View>
-              <View className="border-b border-neutral-200 py-2">
-                <Item
-                  text="ACCOUNT.HISTORY"
-                  onPress={onPressHistory}
-                  icon={<HistoryIcon />}
-                />
-              </View>
-              <View className="border-b border-neutral-200 py-2">
-                <Item
-                  text="ACCOUNT.MY_VOUCHERS"
-                  onPress={onPressMyVoucher}
-                  icon={<VoucherIcon />}
-                />
+                <View className="border-b border-neutral-200 py-2">
+                  <Item
+                    text="ACCOUNT.HISTORY"
+                    onPress={onPressHistory}
+                    icon={<HistoryIcon />}
+                  />
+                </View>
+                <View className="border-b border-neutral-200 py-2">
+                  <Item
+                    text="ACCOUNT.MY_VOUCHERS"
+                    onPress={onPressMyVoucher}
+                    icon={<VoucherIcon />}
+                  />
+                </View>
               </View>
             </ItemsContainer>
             <ItemsContainer

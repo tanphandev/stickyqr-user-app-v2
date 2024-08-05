@@ -2,14 +2,26 @@
   "ACCOUNT": {
     "ACCOUNT": "Tài khoản",
     "ACCOUNT_SCREEN": "Tài khoản",
+    "ADDRESS": "Địa chỉ",
+    "EMAIL": "Email",
+    "FEMALE": "Nữ",
+    "GENDER": "Giới tính",
     "HISTORY": "Lịch sử",
     "LANGUAGE": "Ngôn ngữ",
+    "MALE": "Nam",
     "MANAGE_ACCOUNT": "Quản lý tài khoản",
     "MY_VOUCHERS": "Vouchers của tôi",
     "NOTIFICATONS": "Thông báo",
+    "NOT_UPDATED_YET": "Chưa cập nhật",
+    "OTHER": "Khác",
+    "PASSWORD": "Mật khẩu",
     "PERSONAL_INFORMATION": "Thông tin cá nhân",
+    "PHONE_NUMBER": "Số điện thoại",
     "REFER_AND_EARN": "Giới thiệu & nhận thưởng",
-    "SETTING": "Cài đặt"
+    "SETTING": "Cài đặt",
+    "TIMEZONE": "Múi giờ",
+    "YOUR_BIRTHDAY": "Ngày sinh của bạn",
+    "YOUR_NAME": "Tên"
   },
   "AUTH": {
     "SIGN_OUT": "Đăng xuất"
