@@ -1,17 +1,25 @@
 import AddIcon from 'assets/account/add.svg';
 import EditIcon from 'assets/account/edit.svg';
 import { useRouter } from 'expo-router';
-import React from 'react';
+import React, { useState } from 'react';
 import { Pressable, ScrollView, Text } from 'react-native';
 
+import { UpdateAddressModal } from '@/components/account/update-address-modal';
+import { UpdateGenderModal } from '@/components/account/update-gender-modal';
+import { UpdateNameModal } from '@/components/account/update-name-modal';
+import { UpdatePasswordModal } from '@/components/account/update-password-modal';
 import { translate } from '@/core';
-import { FocusAwareStatusBar, View } from '@/ui';
+import type { Address } from '@/types/profile.type';
+import { FocusAwareStatusBar, Modal, useModal, View } from '@/ui';
 import { ArrowLeft } from '@/ui/icons/arrow-left';
 
 export default function ProfileScreen() {
   const router = useRouter();
-
-  const profile = {
+  const { ref, present, dismiss } = useModal();
+  const [modalContent, setModalContent] = useState<React.ReactNode>(null);
+  const [titleModal, setTitleModal] = useState('');
+  const [snapPointsModal, setSnapPointsModal] = useState<string[]>([]);
+  const [profile, setProfile] = useState({
     id: 'clwpu3htm000zj2031t758myj',
     avatar: {
       id: 'cly73kya2000211xhcmaa8v54',
@@ -61,27 +69,68 @@ export default function ProfileScreen() {
     },
     dateOfBirth: '06-10',
     timeZone: 'Asia/Ho_Chi_Minh',
-  };
+  });
+
   const handleBackToAccount = () => {
     router.back();
   };
 
   const onOpenBottomSheet = (field: string) => {
     switch (field) {
-      case 'name':
-        console.log('update name');
-        break;
-      case 'email':
-        console.log('update email');
-        break;
-      case 'phone':
-        console.log('update phone');
+      case 'displayName':
+        setTitleModal('UPDATE NAME');
+        setSnapPointsModal(['30%']);
+        setModalContent(
+          <UpdateNameModal
+            type="displayName"
+            initialValue={profile.displayName}
+            handleUpdateProfile={(type, newName) =>
+              handleUpdateProfile(type, newName)
+            }
+          />
+        );
+        present();
         break;
       case 'address':
-        console.log('update address');
+        setTitleModal('UPDATE ADDRESS');
+        setSnapPointsModal(['60%']);
+        setModalContent(
+          <UpdateAddressModal
+            type="address"
+            initialValue={profile.address as unknown as Address}
+            handleUpdateProfile={(type, newAddress) =>
+              handleUpdateProfile(type, newAddress)
+            }
+          />
+        );
+        present();
         break;
       case 'gender':
-        console.log('update gender');
+        setTitleModal('UPDATE GENDER');
+        setSnapPointsModal(['40%']);
+        setModalContent(
+          <UpdateGenderModal
+            type="gender"
+            initialValue={profile.gender}
+            handleUpdateProfile={(type, newGender) =>
+              handleUpdateProfile(type, newGender)
+            }
+          />
+        );
+        present();
+        break;
+      case 'password':
+        setTitleModal('UPDATE PASSWORD');
+        setSnapPointsModal(['50%']);
+        setModalContent(
+          <UpdatePasswordModal
+            type="password"
+            handleUpdateProfile={(currentPassword, newPassword) =>
+              console.log('update password', currentPassword, newPassword)
+            }
+          />
+        );
+        present();
         break;
       default:
         break;
@@ -113,123 +162,138 @@ export default function ProfileScreen() {
         return `${translate('ACCOUNT.OTHER')}`;
     }
   };
-  return (
-    <View className="flex-1">
-      <FocusAwareStatusBar />
-      <ScrollView>
-        <View className="flex flex-row items-center px-4 pb-3 pt-16">
-          <Pressable onPress={handleBackToAccount}>
-            <ArrowLeft />
-          </Pressable>
-          <Text className="flex-1 text-center text-xl font-bold">
-            {translate('ACCOUNT.PERSONAL_INFORMATION')}
-          </Text>
-        </View>
-        <View className="px-4 py-6">
-          <View className="mb-4 border-b border-neutral-200 pb-3">
-            <Text className="text-sm font-normal text-[#7D7D7D]">
-              {translate('ACCOUNT.YOUR_NAME')}
-            </Text>
-            <View className="flex flex-row items-center justify-between py-2">
-              {profile.displayName ? (
-                <>
-                  <Text className="leading-6">{profile.displayName}</Text>
-                  <Pressable onPress={() => onOpenBottomSheet('name')}>
-                    <EditIcon />
-                  </Pressable>
-                </>
-              ) : (
-                <>
-                  <Text className="leading-6 text-[#999CA0]">
-                    {translate('ACCOUNT.NOT_UPDATED_YET')}
-                  </Text>
-                  <Pressable onPress={() => onOpenBottomSheet('name')}>
-                    <AddIcon />
-                  </Pressable>
-                </>
-              )}
-            </View>
-          </View>
 
-          <View className="mb-4 border-b border-neutral-200 pb-3">
-            <Text className="text-sm font-normal text-[#7D7D7D]">
-              {translate('ACCOUNT.PHONE_NUMBER')}
+  const handleUpdateProfile = (type: string, value: any) => {
+    setProfile((prevProfile) => ({
+      ...prevProfile,
+      [type]: value,
+    }));
+    dismiss();
+  };
+  return (
+    <>
+      <View className="flex-1">
+        <FocusAwareStatusBar />
+        <ScrollView>
+          <View className="flex flex-row items-center px-4 pb-3 pt-16">
+            <Pressable onPress={handleBackToAccount}>
+              <ArrowLeft />
+            </Pressable>
+            <Text className="flex-1 text-center text-xl font-bold">
+              {translate('ACCOUNT.PERSONAL_INFORMATION')}
             </Text>
-            <View className="flex flex-row items-center justify-between py-2">
-              <Text className="leading-6">{profile.phone}</Text>
-            </View>
           </View>
-          <View className="mb-4 border-b border-neutral-200 pb-3">
-            <Text className="text-sm font-normal text-[#7D7D7D]">
-              {translate('ACCOUNT.EMAIL')}
-            </Text>
-            <View className="flex flex-row items-center justify-between py-2">
-              {profile.email ? (
-                <>
-                  <Text className="leading-6">{profile.email}</Text>
-                  <Pressable onPress={() => onOpenBottomSheet('email')}>
-                    <EditIcon />
-                  </Pressable>
-                </>
-              ) : (
-                <>
+          <View className="px-4 py-6">
+            <View className="mb-4 border-b border-neutral-200 pb-3">
+              <Text className="text-sm font-normal text-[#7D7D7D]">
+                {translate('ACCOUNT.YOUR_NAME')}
+              </Text>
+              <View className="flex flex-row items-center justify-between py-2">
+                {profile.displayName ? (
+                  <>
+                    <Text className="leading-6">{profile.displayName}</Text>
+                    <Pressable onPress={() => onOpenBottomSheet('displayName')}>
+                      <EditIcon />
+                    </Pressable>
+                  </>
+                ) : (
+                  <>
+                    <Text className="leading-6 text-[#999CA0]">
+                      {translate('ACCOUNT.NOT_UPDATED_YET')}
+                    </Text>
+                    <Pressable onPress={() => onOpenBottomSheet('displayName')}>
+                      <AddIcon />
+                    </Pressable>
+                  </>
+                )}
+              </View>
+            </View>
+
+            <View className="mb-4 border-b border-neutral-200 pb-3">
+              <Text className="text-sm font-normal text-[#7D7D7D]">
+                {translate('ACCOUNT.PHONE_NUMBER')}
+              </Text>
+              <View className="flex flex-row items-center justify-between py-2">
+                <Text className="leading-6">{profile.phone}</Text>
+              </View>
+            </View>
+            <View className="mb-4 border-b border-neutral-200 pb-3">
+              <Text className="text-sm font-normal text-[#7D7D7D]">
+                {translate('ACCOUNT.EMAIL')}
+              </Text>
+              <View className="flex flex-row items-center justify-between py-2">
+                {profile.email ? (
+                  <>
+                    <Text className="leading-6">{profile.email}</Text>
+                  </>
+                ) : (
+                  <>
+                    <Text className="leading-6 text-[#999CA0]">
+                      {translate('ACCOUNT.NOT_UPDATED_YET')}
+                    </Text>
+                    <Pressable onPress={() => onOpenBottomSheet('email')}>
+                      <AddIcon />
+                    </Pressable>
+                  </>
+                )}
+              </View>
+            </View>
+            <View className="mb-4 border-b border-neutral-200 pb-3">
+              <Text className="text-sm font-normal text-[#7D7D7D]">
+                {translate('ACCOUNT.ADDRESS')}
+              </Text>
+              <View className="flex flex-row items-center justify-between py-2">
+                {getAddress() ? (
+                  <Text className="leading-6">{getAddress()}</Text>
+                ) : (
                   <Text className="leading-6 text-[#999CA0]">
                     {translate('ACCOUNT.NOT_UPDATED_YET')}
                   </Text>
-                  <Pressable onPress={() => onOpenBottomSheet('email')}>
-                    <AddIcon />
-                  </Pressable>
-                </>
-              )}
+                )}
+                <Pressable onPress={() => onOpenBottomSheet('address')}>
+                  <EditIcon />
+                </Pressable>
+              </View>
+            </View>
+            <View className="mb-4 border-b border-neutral-200 pb-3">
+              <Text className="text-sm font-normal text-[#7D7D7D]">
+                {translate('ACCOUNT.GENDER')}
+              </Text>
+              <View className="flex flex-row items-center justify-between py-2">
+                {profile.gender ? (
+                  <Text className="leading-6">{getGender(profile.gender)}</Text>
+                ) : (
+                  <Text className="leading-6 text-[#999CA0]">
+                    {translate('ACCOUNT.NOT_UPDATED_YET')}
+                  </Text>
+                )}
+                <Pressable onPress={() => onOpenBottomSheet('gender')}>
+                  <EditIcon />
+                </Pressable>
+              </View>
+            </View>
+            <View className="mb-4 border-b border-neutral-200 pb-3">
+              <Text className="text-sm font-normal text-[#7D7D7D]">
+                {translate('ACCOUNT.PASSWORD')}
+              </Text>
+              <View className="flex flex-row items-center justify-between py-2">
+                <Text className="leading-6 text-black">•••••••••</Text>
+                <Pressable onPress={() => onOpenBottomSheet('password')}>
+                  <EditIcon />
+                </Pressable>
+              </View>
             </View>
           </View>
-          <View className="mb-4 border-b border-neutral-200 pb-3">
-            <Text className="text-sm font-normal text-[#7D7D7D]">
-              {translate('ACCOUNT.ADDRESS')}
-            </Text>
-            <View className="flex flex-row items-center justify-between py-2">
-              {getAddress() ? (
-                <Text className="leading-6">{getAddress()}</Text>
-              ) : (
-                <Text className="leading-6 text-[#999CA0]">
-                  {translate('ACCOUNT.NOT_UPDATED_YET')}
-                </Text>
-              )}
-              <Pressable onPress={() => onOpenBottomSheet('address')}>
-                <EditIcon />
-              </Pressable>
-            </View>
-          </View>
-          <View className="mb-4 border-b border-neutral-200 pb-3">
-            <Text className="text-sm font-normal text-[#7D7D7D]">
-              {translate('ACCOUNT.GENDER')}
-            </Text>
-            <View className="flex flex-row items-center justify-between py-2">
-              {profile.gender ? (
-                <Text className="leading-6">{getGender(profile.gender)}</Text>
-              ) : (
-                <Text className="leading-6 text-[#999CA0]">
-                  {translate('ACCOUNT.NOT_UPDATED_YET')}
-                </Text>
-              )}
-              <Pressable onPress={() => onOpenBottomSheet('gender')}>
-                <EditIcon />
-              </Pressable>
-            </View>
-          </View>
-          <View className="mb-4 border-b border-neutral-200 pb-3">
-            <Text className="text-sm font-normal text-[#7D7D7D]">
-              {translate('ACCOUNT.PASSWORD')}
-            </Text>
-            <View className="flex flex-row items-center justify-between py-2">
-              <Text className="leading-6 text-[#999CA0]">•••••••</Text>
-              <Pressable>
-                <EditIcon />
-              </Pressable>
-            </View>
-          </View>
-        </View>
-      </ScrollView>
-    </View>
+        </ScrollView>
+      </View>
+      <Modal
+        ref={ref}
+        title={titleModal}
+        snapPoints={snapPointsModal}
+        classNameTitle="text-[18px] leading-[24px] font-semibold py-3"
+      >
+        {modalContent}
+      </Modal>
+    </>
   );
 }

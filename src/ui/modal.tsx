@@ -42,12 +42,15 @@ import { Text } from './text';
 
 type ModalProps = BottomSheetModalProps & {
   title?: string;
+  classNameTitle?: string;
+  enableDynamicSizing?: boolean;
 };
 
 type ModalRef = React.ForwardedRef<BottomSheetModal>;
 
 type ModalHeaderProps = {
   title?: string;
+  classNameTitle?: string;
   dismiss: () => void;
 };
 
@@ -155,23 +158,27 @@ const getDetachedProps = (detached: boolean) => {
  * ModalHeader
  */
 
-const ModalHeader = React.memo(({ title, dismiss }: ModalHeaderProps) => {
-  return (
-    <>
-      {title && (
-        <View className="flex-row px-2 py-4">
-          <View className="h-[24px] w-[24px]" />
-          <View className="flex-1">
-            <Text className="text-center text-[16px] font-bold text-[#26313D] dark:text-white">
-              {title}
-            </Text>
+const ModalHeader = React.memo(
+  ({ title, dismiss, classNameTitle }: ModalHeaderProps) => {
+    return (
+      <>
+        {title && (
+          <View className="flex-row px-2 py-4">
+            <View className="h-[24px] w-[24px]" />
+            <View className="flex-1">
+              <Text
+                className={`text-center text-[16px] font-bold text-[#26313D] dark:text-white ${classNameTitle}`}
+              >
+                {title}
+              </Text>
+            </View>
           </View>
-        </View>
-      )}
-      <CloseButton close={dismiss} />
-    </>
-  );
-});
+        )}
+        <CloseButton close={dismiss} />
+      </>
+    );
+  }
+);
 
 const CloseButton = ({ close }: { close: () => void }) => {
   return (
