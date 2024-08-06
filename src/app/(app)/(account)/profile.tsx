@@ -5,15 +5,19 @@ import React, { useState } from 'react';
 import { Pressable, ScrollView, Text } from 'react-native';
 
 import { UpdateAddressModal } from '@/components/account/update-address-modal';
+import { UpdateDateOfBirthModal } from '@/components/account/update-date-of-birth-modal';
 import { UpdateGenderModal } from '@/components/account/update-gender-modal';
 import { UpdateNameModal } from '@/components/account/update-name-modal';
 import { UpdatePasswordModal } from '@/components/account/update-password-modal';
-import { translate } from '@/core';
+import { getLanguage, translate } from '@/core';
+import { formatDateByLocale } from '@/core/utils/date';
 import type { Address } from '@/types/profile.type';
 import { FocusAwareStatusBar, Modal, useModal, View } from '@/ui';
 import { ArrowLeft } from '@/ui/icons/arrow-left';
 
+// eslint-disable-next-line max-lines-per-function
 export default function ProfileScreen() {
+  const locale = getLanguage();
   const router = useRouter();
   const { ref, present, dismiss } = useModal();
   const [modalContent, setModalContent] = useState<React.ReactNode>(null);
@@ -132,6 +136,20 @@ export default function ProfileScreen() {
         );
         present();
         break;
+      case 'dateOfBirth':
+        setTitleModal('UPDATE DATE OF BIRTH');
+        setSnapPointsModal(['30%']);
+        setModalContent(
+          <UpdateDateOfBirthModal
+            type="dateOfBirth"
+            initialValue={profile.dateOfBirth}
+            handleUpdateProfile={(type, date) =>
+              handleUpdateProfile(type, date)
+            }
+          />
+        );
+        present();
+        break;
       default:
         break;
     }
@@ -161,6 +179,24 @@ export default function ProfileScreen() {
       default:
         return `${translate('ACCOUNT.OTHER')}`;
     }
+  };
+  const formatDateOfBirth = (date: string) => {
+    const currentYear = new Date().getFullYear();
+    const hyphenCount = (date.match(/-/g) || []).length;
+    let fullDateString;
+    // Determine the date format
+    if (hyphenCount === 2) {
+      fullDateString = date; // yyyy-mm-dd
+    } else if (hyphenCount === 1) {
+      // mm-dd
+      fullDateString = `${currentYear}-${date}`;
+    } else {
+      throw new Error('Invalid date format');
+    }
+    return formatDateByLocale(fullDateString, locale || 'en', {
+      month: 'long',
+      day: 'numeric',
+    });
   };
 
   const handleUpdateProfile = (type: string, value: any) => {
@@ -240,6 +276,23 @@ export default function ProfileScreen() {
             </View>
             <View className="mb-4 border-b border-neutral-200 pb-3">
               <Text className="text-sm font-normal text-[#7D7D7D]">
+                {translate('ACCOUNT.GENDER')}
+              </Text>
+              <View className="flex flex-row items-center justify-between py-2">
+                {profile.gender ? (
+                  <Text className="leading-6">{getGender(profile.gender)}</Text>
+                ) : (
+                  <Text className="leading-6 text-[#999CA0]">
+                    {translate('ACCOUNT.NOT_UPDATED_YET')}
+                  </Text>
+                )}
+                <Pressable onPress={() => onOpenBottomSheet('gender')}>
+                  <EditIcon />
+                </Pressable>
+              </View>
+            </View>
+            <View className="mb-4 border-b border-neutral-200 pb-3">
+              <Text className="text-sm font-normal text-[#7D7D7D]">
                 {translate('ACCOUNT.ADDRESS')}
               </Text>
               <View className="flex flex-row items-center justify-between py-2">
@@ -257,17 +310,36 @@ export default function ProfileScreen() {
             </View>
             <View className="mb-4 border-b border-neutral-200 pb-3">
               <Text className="text-sm font-normal text-[#7D7D7D]">
-                {translate('ACCOUNT.GENDER')}
+                {translate('ACCOUNT.DATE_OF_BIRTH')}
               </Text>
               <View className="flex flex-row items-center justify-between py-2">
                 {profile.gender ? (
-                  <Text className="leading-6">{getGender(profile.gender)}</Text>
+                  <Text className="leading-6">
+                    {formatDateOfBirth(profile?.dateOfBirth)}
+                  </Text>
                 ) : (
                   <Text className="leading-6 text-[#999CA0]">
                     {translate('ACCOUNT.NOT_UPDATED_YET')}
                   </Text>
                 )}
-                <Pressable onPress={() => onOpenBottomSheet('gender')}>
+                <Pressable onPress={() => onOpenBottomSheet('dateOfBirth')}>
+                  <EditIcon />
+                </Pressable>
+              </View>
+            </View>
+            <View className="mb-4 border-b border-neutral-200 pb-3">
+              <Text className="text-sm font-normal text-[#7D7D7D]">
+                {translate('ACCOUNT.TIMEZONE')}
+              </Text>
+              <View className="flex flex-row items-center justify-between py-2">
+                {profile.gender ? (
+                  <Text className="leading-6">{profile.timeZone}</Text>
+                ) : (
+                  <Text className="leading-6 text-[#999CA0]">
+                    {translate('ACCOUNT.NOT_UPDATED_YET')}
+                  </Text>
+                )}
+                <Pressable onPress={() => onOpenBottomSheet('timeZone')}>
                   <EditIcon />
                 </Pressable>
               </View>
@@ -290,7 +362,7 @@ export default function ProfileScreen() {
         ref={ref}
         title={titleModal}
         snapPoints={snapPointsModal}
-        classNameTitle="text-[18px] leading-[24px] font-semibold py-3"
+        classNameTitle="text-[18px] leading-[24px] font-semibold"
       >
         {modalContent}
       </Modal>

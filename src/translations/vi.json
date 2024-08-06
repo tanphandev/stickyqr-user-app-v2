@@ -3,6 +3,7 @@
     "ACCOUNT": "Tài khoản",
     "ACCOUNT_SCREEN": "Tài khoản",
     "ADDRESS": "Địa chỉ",
+    "DATE_OF_BIRTH": "Ngày sinh của bạn",
     "EMAIL": "Email",
     "FEMALE": "Nữ",
     "GENDER": "Giới tính",
@@ -20,7 +21,6 @@
     "REFER_AND_EARN": "Giới thiệu & nhận thưởng",
     "SETTING": "Cài đặt",
     "TIMEZONE": "Múi giờ",
-    "YOUR_BIRTHDAY": "Ngày sinh của bạn",
     "YOUR_NAME": "Tên"
   },
   "AUTH": {

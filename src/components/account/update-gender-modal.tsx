@@ -35,6 +35,7 @@ export const UpdateGenderModal = ({
             { label: 'Other', value: 'o' },
           ]}
           onValueChange={handleValueChange}
+          classNameRadioButton="border-b border-neutral-200 pb-5"
           classNameRadioForm="mb-3"
           initialValue={initialValue}
         />

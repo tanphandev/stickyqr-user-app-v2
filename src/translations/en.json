@@ -3,6 +3,7 @@
     "ACCOUNT": "Account",
     "ACCOUNT_SCREEN": "Account screen",
     "ADDRESS": "Address",
+    "DATE_OF_BIRTH": "Your birthday (we'd love to send you a gift)",
     "EMAIL": "Email",
     "FEMALE": "Female",
     "GENDER": "Gender",
@@ -20,7 +21,6 @@
     "REFER_AND_EARN": "Refer & Earn",
     "SETTING": "Setting",
     "TIMEZONE": "Timezone",
-    "YOUR_BIRTHDAY": "Your birthday (we'd love to send you a gift)",
     "YOUR_NAME": "Your Name"
   },
   "AUTH": {
