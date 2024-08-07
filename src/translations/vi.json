@@ -6,6 +6,7 @@
   "AUTH": {
     "CONTINUE": "Tiếp tục",
     "DIDN'T_RECEIVE_A_CODE": "Không nhận được mã?",
+    "EMAIL": "Email",
     "ENTER_THE_CODE_THAT_WAS_CALLED_TO": "Nhập mã xác minh được gọi đến",
     "ENTER_THE_CODE_WE_SENT_OVER_EMAIL_TO": "Nhập mã xác minh đã được gửi tới email",
     "ENTER_THE_CODE_WE_SENT_OVER_SMS_TO": "Nhập mã xác minh được gửi qua SMS đến",
@@ -28,11 +29,14 @@
     "VERIFY": "Xác minh"
   },
   "ERROR_MESSAGE": {
+    "EMAIL_INVALID": "Email không hợp lệ",
+    "EMAIL_REQUIRED": "Email là bắt buộc",
     "PASSWORD_REQUIRED": "Mật khẩu là bắt buộc",
     "PHONE_INVALID": "Số điện thoại không hợp lệ",
     "PHONE_OR_PASSWORD_INVALID": "Số điện thoại hoặc mật khẩu không hợp lệ!",
     "PHONE_REQUIRED": "Số điện thoại là bắt buộc",
-    "SIGN_UP_WHEN_SCAN_QR": "Bạn chỉ có thể đăng ký khi quét mã QR để nhận phần thưởng từ Cửa hàng tham gia. Cảm ơn."
+    "SIGN_UP_WHEN_SCAN_QR": "Bạn chỉ có thể đăng ký khi quét mã QR để nhận phần thưởng từ Cửa hàng tham gia. Cảm ơn.",
+    "THE_OTP_IS_INVALID_OR_EXPIRED": "The OTP is invalid or Expired!"
   },
   "HOME": {
     "HOME_SCREEN": "Trang chủ"

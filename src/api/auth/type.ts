@@ -68,3 +68,9 @@ export interface RefreshToken {
   userId: string;
   displayName: string;
 }
+
+export interface SetPasswordIsValidDto {
+  identity: string;
+  verifyId: string;
+  code: string;
+}
