@@ -13,7 +13,7 @@ import { FocusAwareStatusBar, Pressable, View } from '@/ui';
 export default function GetStarted() {
   // state
   const [currentStep, setCurrentStep] = useState<AuthStepList>(
-    AuthStepList.CheckPhone
+    AuthStepList.SetPassword
   );
   const [prevStep, setPrevStep] = useState<AuthStepList[]>([]);
   const [checkUserData, setCheckUserData] = useState<CheckUserData | null>(

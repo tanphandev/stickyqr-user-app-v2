@@ -1,21 +1,62 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
 import { Pressable, Text, View } from 'react-native';
 
 import { translate } from '@/core/i18n';
 import type { CheckUserData } from '@/types/auth';
 import { Button } from '@/ui';
+import type { OTPFormData } from '@/ui/otp-input';
+import OTPInput from '@/ui/otp-input';
 
 type Props = {
   checkUserData: CheckUserData;
   nextStep: (step: any) => void;
 };
 
+// eslint-disable-next-line max-lines-per-function
 function SetPasswordStep({ checkUserData, nextStep }: Props) {
+  // form
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+    setValue,
+    getValues,
+    setError,
+    clearErrors,
+  } = useForm<OTPFormData>({
+    mode: 'onSubmit',
+    defaultValues: {
+      otp: ['', '', '', '', '', ''],
+    },
+  });
+
   console.log('nextStep', nextStep);
 
-  // const onSubmit = (data: any) => {
-  //   console.log('OTP Input', data);
-  // };
+  // handle submit
+  const onSubmitOTP = (data: OTPFormData) => {
+    const otp = data.otp.join('');
+    const isEmpty = data.otp.every((value) => value === '');
+    const hasEmptyField = data.otp.some((value) => value === '');
+
+    if (isEmpty) {
+      setError('otp', {
+        type: 'manual',
+        message: 'OTP is required',
+      });
+      return;
+    } else if (hasEmptyField) {
+      setError('otp', {
+        type: 'manual',
+        message: 'OTP is invalid',
+      });
+      return;
+    }
+
+    console.log('otp', otp);
+  };
+
+  console.log('errors', errors.otp);
   return (
     <View className="flex flex-1 flex-col justify-between px-8">
       <View>
@@ -28,7 +69,13 @@ function SetPasswordStep({ checkUserData, nextStep }: Props) {
         <Text className="text-center text-base leading-[24px]">
           +{checkUserData?.phoneCode! + checkUserData?.phone!}
         </Text>
-        {/* <OTPInput onSubmit={onSubmit} /> */}
+        <OTPInput
+          control={control}
+          value={getValues('otp')}
+          setValue={setValue}
+          clearErrors={clearErrors}
+          setError={setError}
+        />
         <View className="flex flex-row items-center justify-center gap-1">
           <Text>{translate("AUTH.DIDN'T_RECEIVE_A_CODE")}</Text>
           <Pressable>
@@ -39,6 +86,7 @@ function SetPasswordStep({ checkUserData, nextStep }: Props) {
         </View>
       </View>
       <Button
+        onPress={handleSubmit(onSubmitOTP)}
         className="mb-10 mt-0 h-12 rounded-lg bg-primary"
         label={translate('AUTH.VERIFY')}
         textClassName="font-normal"
