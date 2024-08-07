@@ -9,6 +9,7 @@ import { UpdateDateOfBirthModal } from '@/components/account/update-date-of-birt
 import { UpdateGenderModal } from '@/components/account/update-gender-modal';
 import { UpdateNameModal } from '@/components/account/update-name-modal';
 import { UpdatePasswordModal } from '@/components/account/update-password-modal';
+import { UpdateTimezoneModal } from '@/components/account/update-timezone-modal';
 import { getLanguage, translate } from '@/core';
 import { formatDateByLocale } from '@/core/utils/date';
 import type { Address } from '@/types/profile.type';
@@ -138,13 +139,27 @@ export default function ProfileScreen() {
         break;
       case 'dateOfBirth':
         setTitleModal('UPDATE DATE OF BIRTH');
-        setSnapPointsModal(['30%']);
+        setSnapPointsModal(['50%']);
         setModalContent(
           <UpdateDateOfBirthModal
             type="dateOfBirth"
             initialValue={profile.dateOfBirth}
             handleUpdateProfile={(type, date) =>
               handleUpdateProfile(type, date)
+            }
+          />
+        );
+        present();
+        break;
+      case 'timeZone':
+        setTitleModal('UPDATE TIMEZONE');
+        setSnapPointsModal(['50%', '100%']);
+        setModalContent(
+          <UpdateTimezoneModal
+            type="timeZone"
+            initialValue={profile.timeZone}
+            handleUpdateProfile={(type, timezone) =>
+              handleUpdateProfile(type, timezone)
             }
           />
         );

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 
 import RadioButton from './radio-button';
 
@@ -30,7 +30,7 @@ const RadioForm: React.FC<RadioFormProps> = ({
   };
 
   return (
-    <View className={`my-[10px] flex flex-col ${classNameRadioForm}`}>
+    <ScrollView className={`my-[10px] flex flex-col ${classNameRadioForm}`}>
       {options.map((option) => (
         <RadioButton
           key={option.value}
@@ -41,7 +41,7 @@ const RadioForm: React.FC<RadioFormProps> = ({
           className={classNameRadioButton}
         />
       ))}
-    </View>
+    </ScrollView>
   );
 };
 
