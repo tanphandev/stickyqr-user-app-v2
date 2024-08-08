@@ -14,6 +14,9 @@ export const enum AuthStepList {
   CheckPhone = 'CheckPhone',
   SignIn = 'SignIn',
   ForgotPassword = 'ForgotPassword',
+  ForgotPasswordVerify = 'ForgotPasswordVerify',
+  NewPassword = 'NewPassword',
+  ForgotPasswordSuccess = 'ForgotPasswordSuccess',
   SetPasswordVerify = 'SetPasswordVerify',
   SetPassword = 'SetPassword',
 }

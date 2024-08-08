@@ -28,6 +28,7 @@ type Props = {
   containterClassName?: string;
   submitButtonCalssName?: string;
   secondaryButtonClassName?: string;
+  allowEditPhone?: boolean;
   errorApi?: string;
   setApiError?: (error: string) => void;
   onSubmit: (data: PhoneFormSchemaType, selectedCountry: Country) => void;
@@ -45,6 +46,7 @@ function PhoneForm({
   containterClassName,
   submitButtonCalssName,
   secondaryButtonClassName,
+  allowEditPhone = true,
   errorApi,
   setApiError,
   onSubmit,
@@ -77,6 +79,7 @@ function PhoneForm({
       >
         <View>
           <PhoneInput
+            allowEditPhone={allowEditPhone}
             ref={phoneInputRef}
             name="phone"
             control={control}

@@ -1,27 +1,46 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { Text, View } from 'react-native';
+import Toast from 'react-native-toast-message';
 
+import type { SharedDataForm } from '@/api/auth/type';
+import { useForgotPassword } from '@/api/auth/use-forgot-password';
 import { translate } from '@/core/i18n';
+import { logger } from '@/helper';
 import { findCountry } from '@/helper/country';
-import type { AuthStepList, CheckUserData } from '@/types/auth';
+import type { CheckUserData } from '@/types/auth';
+import { AuthStepList } from '@/types/auth';
 import PhoneForm from '@/ui/form/phone-form';
 
 type Props = {
   checkUserData: CheckUserData | null;
+  setSharedDataForm: React.Dispatch<
+    React.SetStateAction<SharedDataForm | null>
+  >;
   nextStep: (step: AuthStepList) => void;
-  setCheckUserData: (data: CheckUserData) => void;
 };
 
 function ForgotPasswordStep({
   checkUserData,
-  setCheckUserData,
+  setSharedDataForm,
   nextStep,
 }: Props) {
+  const { mutateAsync: forgotPassword } = useForgotPassword();
+
   const onSubmit = async (data: any, countrySelected: any) => {
-    const phoneNumber = '+' + countrySelected.phoneCode + data.phone;
-    console.log('data', phoneNumber);
-    console.log('setCheckUserData', setCheckUserData);
-    console.log('nextStep', nextStep);
+    try {
+      const phoneNumber = '+' + countrySelected.phoneCode + data.phone;
+      const resData = await forgotPassword({ phone: phoneNumber });
+      setSharedDataForm({ id: resData.id });
+      nextStep(AuthStepList.ForgotPasswordVerify);
+    } catch (error: any) {
+      if (error?.statusCode === 404) {
+        Toast.show({
+          type: 'error',
+          text1: translate('ERROR_MESSAGE.USER_NOT_FOUND'),
+        });
+      }
+      logger('log', '[ApiService]-[ForgotPassword]-[Error]', error);
+    }
   };
 
   return (

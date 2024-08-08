@@ -140,3 +140,9 @@ export interface SetPasswordVerify {
   refreshToken: string;
   userId: string;
 }
+
+export interface ForgotPasswordDto extends CheckUserDto {}
+
+export interface ForgotPassword {
+  id: string;
+}

@@ -4,6 +4,9 @@ import React, { useState } from 'react';
 import type { SharedDataForm } from '@/api/auth/type';
 import CheckPhoneStep from '@/components/auth/check-phone-step';
 import ForgotPasswordStep from '@/components/auth/forgot-password-step';
+import ForgotPasswordSuccessStep from '@/components/auth/forgot-password-success-step';
+import ForgotPasswordVerifyStep from '@/components/auth/forgot-password-verify-step';
+import NewPasswordStep from '@/components/auth/new-password-step';
 import SetPasswordStep from '@/components/auth/set-password-step';
 import SetPasswordVerifyStep from '@/components/auth/set-password-verify-step';
 import SignInStep from '@/components/auth/sign-in-step';
@@ -15,7 +18,7 @@ import { FocusAwareStatusBar, Pressable, View } from '@/ui';
 export default function GetStarted() {
   // state
   const [currentStep, setCurrentStep] = useState<AuthStepList>(
-    AuthStepList.CheckPhone
+    AuthStepList.ForgotPasswordVerify
   );
   const [prevStep, setPrevStep] = useState<AuthStepList[]>([]);
   const [checkUserData, setCheckUserData] = useState<CheckUserData | null>(
@@ -53,10 +56,23 @@ export default function GetStarted() {
         return (
           <ForgotPasswordStep
             checkUserData={checkUserData}
-            setCheckUserData={setCheckUserData}
+            setSharedDataForm={setSharedDataForm}
             nextStep={nextStep}
           />
         );
+      case AuthStepList.ForgotPasswordVerify:
+        return (
+          <ForgotPasswordVerifyStep
+            checkUserData={checkUserData!}
+            sharedDataForm={sharedDataForm!}
+            setSharedDataForm={setSharedDataForm}
+            nextStep={nextStep}
+          />
+        );
+      case AuthStepList.NewPassword:
+        return <NewPasswordStep />;
+      case AuthStepList.ForgotPasswordSuccess:
+        return <ForgotPasswordSuccessStep />;
       case AuthStepList.SetPasswordVerify:
         return (
           <SetPasswordVerifyStep

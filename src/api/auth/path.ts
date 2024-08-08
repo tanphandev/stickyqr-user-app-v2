@@ -9,6 +9,7 @@ export const API_PATH = {
     BASE_API + '/auth/set-userpass/is-valid-code',
   SET_USER_PASSWORD_RESEND: BASE_API + '/auth/set-userpass/ressend',
   SET_USER_PASSWORD_VERIFY: BASE_API + '/auth/set-userpass/verify',
+  FORGOT_PASSWORD: BASE_API + '/auth/forgot-password',
   PROFILE: BASE_API + '/users/profile',
   REFRESH_TOKEN: BASE_API + '/auth/token',
 };
