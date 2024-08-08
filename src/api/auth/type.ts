@@ -113,3 +113,30 @@ export interface SharedDataForm {
   id?: string;
   code?: string;
 }
+
+export interface SetPasswordResendDto {
+  isVoice?: boolean;
+  phone: string;
+  verifyId: string;
+  method?: string;
+  mValue?: string;
+}
+
+export interface SetPasswordResend extends ForgotPassword {}
+
+export interface SetPasswordVerifyDto {
+  username: string;
+  verifyId: string;
+  code: string;
+  password: string;
+}
+
+export interface SetPasswordVerify {
+  accessToken: string;
+  displayName: string;
+  email: string | null;
+  expiresIn: string;
+  phone: string;
+  refreshToken: string;
+  userId: string;
+}

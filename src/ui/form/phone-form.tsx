@@ -61,6 +61,9 @@ function PhoneForm({
 
   const phoneInputRef = React.useRef<PhoneInputRef>(null);
 
+  // state
+  const [loading, setLoading] = React.useState<boolean>(false);
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -87,10 +90,16 @@ function PhoneForm({
         </View>
         <View>
           <Button
+            loading={loading}
             className={submitButtonCalssName}
             label={submitLabel}
-            onPress={handleSubmit((data) => {
-              onSubmit(data, phoneInputRef.current?.selectedCountry!);
+            onPress={handleSubmit(async (data) => {
+              try {
+                setLoading(true);
+                await onSubmit(data, phoneInputRef.current?.selectedCountry!);
+              } finally {
+                setLoading(false);
+              }
             })}
             textClassName="font-normal"
           />

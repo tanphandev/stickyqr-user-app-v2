@@ -1,10 +1,11 @@
-import React, { Fragment, useRef } from 'react';
+import React, { Fragment, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Pressable, Text, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 
-import type { SharedDataForm } from '@/api/auth/type';
+import type { SetPasswordResendDto, SharedDataForm } from '@/api/auth/type';
 import { useSetPasswordIsValidCode } from '@/api/auth/use-set-password-is-valid-code';
+import { useSetPasswordResendCode } from '@/api/auth/use-set-password-resend-code';
 import { translate } from '@/core/i18n';
 import { logger } from '@/helper';
 import { AuthStepList, type CheckUserData } from '@/types/auth';
@@ -13,7 +14,13 @@ import type { OTPFormData } from '@/ui/otp-input';
 import OTPInput from '@/ui/otp-input';
 
 import type { GetCodeByBottomSheetRefType } from '../modal/get-code-by';
+import { METHOD } from '../modal/get-code-by';
 import GetCodeByBottomSheet from '../modal/get-code-by';
+
+export type SendCodeType = {
+  type: METHOD;
+  value: string;
+};
 
 type Props = {
   checkUserData: CheckUserData;
@@ -31,13 +38,17 @@ function SetPasswordVerifyStep({
   setSharedDataForm,
   nextStep,
 }: Props) {
-  console.log('sharedDataForm', sharedDataForm);
   const { mutateAsync: setPasswordIsValid } = useSetPasswordIsValidCode();
+  const { mutateAsync: setPasswordResendCode } = useSetPasswordResendCode();
 
   // ref
   const getByCoderef = useRef<GetCodeByBottomSheetRefType>(null);
 
   // state
+  const [sendCodeSharedData, setSendCodeSharedData] = useState<SendCodeType>({
+    type: METHOD.phoneText,
+    value: `+${checkUserData?.phoneCode!}${checkUserData?.phone!}`,
+  });
   const [loading, setLoading] = React.useState<boolean>(false);
 
   // form
@@ -91,6 +102,83 @@ function SetPasswordVerifyStep({
     }
   };
 
+  //  use another method to get code
+  const getCode = async (method: METHOD, value: string) => {
+    try {
+      const payload: SetPasswordResendDto = {
+        phone: `+${checkUserData?.phoneCode!}${checkUserData?.phone!}`,
+        verifyId: sharedDataForm?.id!,
+      };
+
+      if (method === METHOD.phoneCall) {
+        payload.isVoice = true;
+      } else if (method === METHOD.email) {
+        payload.isVoice = false;
+        payload.method = METHOD.email;
+        payload.mValue = value;
+      }
+      const data = await setPasswordResendCode(payload);
+      setSharedDataForm((prevData) => ({
+        ...prevData,
+        id: data.id,
+      }));
+      setSendCodeSharedData({
+        type: method,
+        value:
+          method === METHOD.email
+            ? value
+            : `+${checkUserData?.phoneCode!}${checkUserData?.phone!}`,
+      });
+    } catch (error: any) {
+      if (error?.statusCode === 406) {
+        Toast.show({
+          type: 'error',
+          text1: error?.message,
+        });
+      } else {
+        logger('log', '[ApiService]-[setPasswordResendCode]-[Error]', error);
+      }
+    }
+  };
+
+  const renderLabel = (sendCodeType: SendCodeType) => {
+    switch (sendCodeType.type) {
+      case METHOD.phoneText:
+        return (
+          <Fragment>
+            <Text className="text-center text-base leading-[24px]">
+              {translate('AUTH.ENTER_THE_CODE_WE_SENT_OVER_SMS_TO')}
+            </Text>
+            <Text className="text-center text-base leading-[24px]">
+              {sendCodeSharedData.value}
+            </Text>
+          </Fragment>
+        );
+      case METHOD.phoneCall:
+        return (
+          <Fragment>
+            <Text className="text-center text-base leading-[24px]">
+              {translate('AUTH.ENTER_THE_CODE_THAT_WAS_CALLED_TO')}
+            </Text>
+            <Text className="text-center text-base leading-[24px]">
+              {sendCodeSharedData.value}
+            </Text>
+          </Fragment>
+        );
+      case METHOD.email:
+        return (
+          <Fragment>
+            <Text className="text-center text-base leading-[24px]">
+              {translate('AUTH.ENTER_THE_CODE_WE_SENT_OVER_EMAIL_TO')}
+            </Text>
+            <Text className="text-center text-base leading-[24px]">
+              {sendCodeSharedData.value}
+            </Text>
+          </Fragment>
+        );
+    }
+  };
+
   return (
     <Fragment>
       <View className="flex flex-1 flex-col justify-between px-8">
@@ -98,12 +186,7 @@ function SetPasswordVerifyStep({
           <Text className="mb-6 mt-9 text-center text-xl font-semibold">
             {translate('AUTH.VERIFICATION_CODE')}
           </Text>
-          <Text className="text-center text-base leading-[24px]">
-            {translate('AUTH.ENTER_THE_CODE_WE_SENT_OVER_SMS_TO')}
-          </Text>
-          <Text className="text-center text-base leading-[24px]">
-            +{checkUserData?.phoneCode! + checkUserData?.phone!}
-          </Text>
+          {renderLabel(sendCodeSharedData)}
           <OTPInput
             control={control}
             value={getValues('otp')}
@@ -111,7 +194,7 @@ function SetPasswordVerifyStep({
             clearErrors={clearErrors}
             setError={setError}
           />
-          <View className="flex flex-row items-center justify-center gap-1">
+          <View className="container flex max-w-[300px] flex-row flex-wrap items-center justify-center gap-1 self-center">
             <Text>{translate("AUTH.DIDN'T_RECEIVE_A_CODE")}</Text>
             <Pressable
               onPress={() => {
@@ -132,7 +215,7 @@ function SetPasswordVerifyStep({
           textClassName="font-normal"
         />
       </View>
-      <GetCodeByBottomSheet ref={getByCoderef} />
+      <GetCodeByBottomSheet ref={getByCoderef} onSubmit={getCode} />
     </Fragment>
   );
 }

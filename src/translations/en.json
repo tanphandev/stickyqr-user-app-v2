@@ -4,6 +4,7 @@
     "ACCOUNT_SCREEN": "Account screen"
   },
   "AUTH": {
+    "CONFIRM_PASSWORD": "Confirm password",
     "CONTINUE": "Continue",
     "DIDN'T_RECEIVE_A_CODE": "Didn't receive a code?",
     "EMAIL": "Email",
@@ -21,6 +22,7 @@
     "PHONE_NUMBER": "Phone number",
     "SCAN_QR": "Scan QR",
     "SELECT": "Select",
+    "SET_PASSWORD": "Set password",
     "SIGN_IN": "Sign In",
     "SIGN_IN_TO_STICKYQR": "Sign in to StickyQR",
     "SIGN_OUT": "Sign out",
@@ -29,8 +31,12 @@
     "VERIFY": "Verify"
   },
   "ERROR_MESSAGE": {
+    "CODE_INVALID": "The verification code is incorrect or has expired.",
+    "CONFIRM_PASSWORD_NOT_MATCH": "Confirm password does not match",
+    "CONFIRM_PASSWORD_REQUIRED": "Confirm password is required",
     "EMAIL_INVALID": "Email is invalid",
     "EMAIL_REQUIRED": "Email is required",
+    "PASSWORD_LEAST_6_CHARS": "Create a password with at least 6 characters",
     "PASSWORD_REQUIRED": "Password is required",
     "PHONE_INVALID": "Phone number is invalid",
     "PHONE_OR_PASSWORD_INVALID": "Invalid Phone number or Password!",

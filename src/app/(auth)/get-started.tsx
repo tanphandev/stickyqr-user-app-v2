@@ -67,7 +67,12 @@ export default function GetStarted() {
           />
         );
       case AuthStepList.SetPassword:
-        return <SetPasswordStep />;
+        return (
+          <SetPasswordStep
+            checkUserData={checkUserData}
+            sharedDataForm={sharedDataForm!}
+          />
+        );
       default:
         return (
           <CheckPhoneStep

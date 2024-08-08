@@ -77,7 +77,6 @@ function CheckPhoneStep({
       const data: SetPassword = await setPassword({
         code: phone,
       });
-      console.log('sendCode', data);
       if (data.isSent) {
         setSharedDataForm((prevData: any) => ({
           ...prevData,

@@ -4,6 +4,7 @@
     "ACCOUNT_SCREEN": "Tài khoản"
   },
   "AUTH": {
+    "CONFIRM_PASSWORD": "Xác nhận mật khẩu",
     "CONTINUE": "Tiếp tục",
     "DIDN'T_RECEIVE_A_CODE": "Không nhận được mã?",
     "EMAIL": "Email",
@@ -21,6 +22,7 @@
     "PHONE_NUMBER": "Số điện thoại",
     "SCAN_QR": "Quét mã",
     "SELECT": "Chọn",
+    "SET_PASSWORD": "Đặt mật khẩu",
     "SIGN_IN": "Đăng nhập",
     "SIGN_IN_TO_STICKYQR": "Đăng nhập vào StickyQR",
     "SIGN_OUT": "Đăng xuất",
@@ -29,8 +31,12 @@
     "VERIFY": "Xác minh"
   },
   "ERROR_MESSAGE": {
+    "CODE_INVALID": "Mã xác minh không đúng hoặc hết hạn.",
+    "CONFIRM_PASSWORD_NOT_MATCH": "Xác nhận mật khẩu không khớp",
+    "CONFIRM_PASSWORD_REQUIRED": "Xác nhận mật khẩu là bắt buộc",
     "EMAIL_INVALID": "Email không hợp lệ",
     "EMAIL_REQUIRED": "Email là bắt buộc",
+    "PASSWORD_LEAST_6_CHARS": "Mật khẩu phải có ít nhất 6 ký tự",
     "PASSWORD_REQUIRED": "Mật khẩu là bắt buộc",
     "PHONE_INVALID": "Số điện thoại không hợp lệ",
     "PHONE_OR_PASSWORD_INVALID": "Số điện thoại hoặc mật khẩu không hợp lệ!",

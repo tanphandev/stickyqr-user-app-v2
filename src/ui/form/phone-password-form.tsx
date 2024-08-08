@@ -66,7 +66,9 @@ function PhonePasswordForm({
   });
   const phoneInputRef = React.useRef<PhoneInputRef>(null);
 
+  // state
   const [showPassword, setShowPassword] = React.useState(false);
+  const [loading, setLoading] = React.useState<boolean>(false);
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -158,10 +160,16 @@ function PhonePasswordForm({
         </View>
         <View>
           <Button
+            loading={loading}
             className={submitButtonClassName}
             label={submitLabel}
-            onPress={handleSubmit((data) => {
-              onSubmit(data, phoneInputRef.current?.selectedCountry!);
+            onPress={handleSubmit(async (data) => {
+              try {
+                setLoading(true);
+                await onSubmit(data, phoneInputRef.current?.selectedCountry!);
+              } finally {
+                setLoading(false);
+              }
             })}
             textClassName="font-normal"
           />

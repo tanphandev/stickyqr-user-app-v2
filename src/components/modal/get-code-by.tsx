@@ -47,16 +47,18 @@ export type GetCodeByBottomSheetRefType = {
   close: () => void;
 };
 
-type Props = {};
+type Props = {
+  onSubmit: (method: METHOD, value: string) => void;
+};
 
 const GetCodeByBottomSheet = forwardRef<GetCodeByBottomSheetRefType, Props>(
   // eslint-disable-next-line max-lines-per-function
-  function Component({}, ref) {
+  function Component({ onSubmit }, ref) {
     // ref
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
     // state
-    const [selectedValue, setSelectedValue] = useState<string>('');
+    const [selectedValue, setSelectedValue] = useState<METHOD | null>(null);
     const [emailValue, setEmailValue] = useState('');
     const [validateEmailError, setValidateEmailError] = useState<string>('');
 
@@ -161,7 +163,6 @@ const GetCodeByBottomSheet = forwardRef<GetCodeByBottomSheetRefType, Props>(
                         placeholder={translate('AUTH.ENTER_YOUR_EMAIL_ADDRESS')}
                         value={emailValue}
                         onChange={(e) => setEmailValue(e.nativeEvent.text)}
-                        containerClassName={clsx({})}
                       />
                     </View>
                     {validateEmailError && (
@@ -172,6 +173,15 @@ const GetCodeByBottomSheet = forwardRef<GetCodeByBottomSheetRefType, Props>(
                   </Fragment>
                 )}
                 <Button
+                  onPress={() => {
+                    if (selectedValue === METHOD.email) {
+                      if (!validateEmail(emailValue)) return;
+                      onSubmit(selectedValue, emailValue);
+                    } else if (selectedValue === METHOD.phoneCall) {
+                      onSubmit(selectedValue, '');
+                    } else return;
+                    bottomSheetModalRef.current?.close();
+                  }}
                   className="mb-6 mt-16 h-12 rounded-xl bg-primary"
                   label={translate('AUTH.CONTINUE')}
                   textClassName="font-normal"
