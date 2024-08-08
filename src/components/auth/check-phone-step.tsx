@@ -2,8 +2,9 @@ import Logo from 'assets/brand/logo.svg';
 import React from 'react';
 import { Text, View } from 'react-native';
 
-import type { CheckUser } from '@/api/auth/type';
+import type { CheckUser, SetPassword, SharedDataForm } from '@/api/auth/type';
 import { useCheckPhone } from '@/api/auth/use-check-phone';
+import { useSendCode } from '@/api/auth/use-send-code';
 import { type Country } from '@/configs/country';
 import { translate } from '@/core/i18n/utils';
 import { logger } from '@/helper';
@@ -17,15 +18,24 @@ type Props = {
   checkUserData: CheckUserData | null;
   nextStep: (step: AuthStepList) => void;
   setCheckUserData: (data: CheckUserData) => void;
+  setSharedDataForm: React.Dispatch<
+    React.SetStateAction<SharedDataForm | null>
+  >;
 };
 
 // eslint-disable-next-line max-lines-per-function
-function CheckPhoneStep({ checkUserData, nextStep, setCheckUserData }: Props) {
+function CheckPhoneStep({
+  checkUserData,
+  setSharedDataForm,
+  nextStep,
+  setCheckUserData,
+}: Props) {
   // state
   const [errorMessage, setErrorMessage] = React.useState<string>('');
 
   // query
   const { mutateAsync: checkPhone } = useCheckPhone();
+  const { mutateAsync: setPassword } = useSendCode();
 
   /* onSubmit */
   const onSubmit = async (
@@ -33,7 +43,6 @@ function CheckPhoneStep({ checkUserData, nextStep, setCheckUserData }: Props) {
     countrySelected: Country
   ) => {
     const userPhone = '+' + countrySelected.phoneCode + data.phone;
-
     try {
       const user: CheckUser = await checkPhone({
         phone: userPhone,
@@ -48,7 +57,8 @@ function CheckPhoneStep({ checkUserData, nextStep, setCheckUserData }: Props) {
         });
       }
       if (!user.isSetPassword) {
-        nextStep(AuthStepList.SetPassword);
+        await sendCode(userPhone);
+        nextStep(AuthStepList.SetPasswordVerify);
       } else {
         nextStep(AuthStepList.SignIn);
       }
@@ -59,6 +69,23 @@ function CheckPhoneStep({ checkUserData, nextStep, setCheckUserData }: Props) {
         setErrorMessage(error?.message);
       }
       logger('log', '[ApiService]-[CheckPhone]-[Error]', error);
+    }
+  };
+
+  const sendCode = async (phone: string) => {
+    try {
+      const data: SetPassword = await setPassword({
+        code: phone,
+      });
+      console.log('sendCode', data);
+      if (data.isSent) {
+        setSharedDataForm((prevData: any) => ({
+          ...prevData,
+          id: data.id,
+        }));
+      }
+    } catch (error: any) {
+      logger('log', '[ApiService]-[SetPasswordSendCode]-[Error]', error);
     }
   };
 

@@ -1,1 +1,1 @@
-export const USER_APP_PLATFORM = 'stickyqr-user-app';
+export const USER_APP_PLATFORM = 'user-app';

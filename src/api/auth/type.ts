@@ -74,3 +74,42 @@ export interface SetPasswordIsValidDto {
   verifyId: string;
   code: string;
 }
+
+export interface ForgotPasswordDto extends CheckUserDto {}
+
+export interface ForgotPassword {
+  id: string;
+}
+
+export interface ForgotPasswordIsValidCodeDto {
+  identity: string;
+  verifyId: string;
+  code: string;
+}
+
+export interface ForgotPasswordResendDto {
+  identity: string;
+  verifyId: string;
+  isVoice: boolean;
+}
+
+export interface ForgotPasswordResend extends ForgotPassword {}
+
+export interface ForgotPasswordVerifyDto {
+  id: string;
+  code: string;
+  password: string;
+}
+
+export interface SetPasswordDto extends CheckUserDto {}
+
+export interface SetPassword {
+  id: string;
+  isSent: boolean;
+  message: string;
+}
+
+export interface SharedDataForm {
+  id?: string;
+  code?: string;
+}

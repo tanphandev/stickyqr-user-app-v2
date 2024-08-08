@@ -1,9 +1,11 @@
 import BackIcon from 'assets/actions/arrow-left-1.svg';
 import React, { useState } from 'react';
 
+import type { SharedDataForm } from '@/api/auth/type';
 import CheckPhoneStep from '@/components/auth/check-phone-step';
 import ForgotPasswordStep from '@/components/auth/forgot-password-step';
 import SetPasswordStep from '@/components/auth/set-password-step';
+import SetPasswordVerifyStep from '@/components/auth/set-password-verify-step';
 import SignInStep from '@/components/auth/sign-in-step';
 import { useSoftKeyboardEffect } from '@/core/keyboard';
 import { AuthStepList, type CheckUserData } from '@/types/auth';
@@ -13,10 +15,13 @@ import { FocusAwareStatusBar, Pressable, View } from '@/ui';
 export default function GetStarted() {
   // state
   const [currentStep, setCurrentStep] = useState<AuthStepList>(
-    AuthStepList.SetPassword
+    AuthStepList.CheckPhone
   );
   const [prevStep, setPrevStep] = useState<AuthStepList[]>([]);
   const [checkUserData, setCheckUserData] = useState<CheckUserData | null>(
+    null
+  );
+  const [sharedDataForm, setSharedDataForm] = useState<SharedDataForm | null>(
     null
   );
 
@@ -37,6 +42,7 @@ export default function GetStarted() {
             nextStep={nextStep}
             checkUserData={checkUserData}
             setCheckUserData={setCheckUserData}
+            setSharedDataForm={setSharedDataForm}
           />
         );
       case AuthStepList.SignIn:
@@ -51,16 +57,24 @@ export default function GetStarted() {
             nextStep={nextStep}
           />
         );
-      case AuthStepList.SetPassword:
+      case AuthStepList.SetPasswordVerify:
         return (
-          <SetPasswordStep checkUserData={checkUserData!} nextStep={nextStep} />
+          <SetPasswordVerifyStep
+            checkUserData={checkUserData!}
+            sharedDataForm={sharedDataForm!}
+            setSharedDataForm={setSharedDataForm}
+            nextStep={nextStep}
+          />
         );
+      case AuthStepList.SetPassword:
+        return <SetPasswordStep />;
       default:
         return (
           <CheckPhoneStep
             nextStep={nextStep}
             checkUserData={checkUserData}
             setCheckUserData={setCheckUserData}
+            setSharedDataForm={setSharedDataForm}
           />
         );
     }
