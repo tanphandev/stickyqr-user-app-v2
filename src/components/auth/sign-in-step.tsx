@@ -1,3 +1,4 @@
+import type { Href } from 'expo-router';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { Text, View } from 'react-native';
@@ -46,9 +47,10 @@ function SignInStep({ checkUserData, nextStep }: Props) {
         setToken(token);
         // get profile
         const userData = await getProfile();
+        console.log('userData', userData);
         // sign in
         signIn(token, userData);
-        router.push(PATH.HOME);
+        router.push(PATH.HOME as Href);
       }
     } catch (error) {
       Toast.show({
@@ -79,7 +81,7 @@ function SignInStep({ checkUserData, nextStep }: Props) {
         allowEditPhone={false}
         submitLabel={translate('AUTH.NEXT')}
         containterClassName="px-8"
-        submitButtonClassName="h-12 mt-0 mb-10 rounded-lg bg-primary"
+        submitButtonClassName="h-12 mt-0 rounded-lg bg-primary"
         onSubmit={onSubmit}
         nextStep={nextStep}
       />

@@ -104,7 +104,7 @@ function PhoneForm({
                 setLoading(false);
               }
             })}
-            textClassName="font-normal"
+            textClassName="font-semibold"
           />
           {onScanQR && (
             <Button

@@ -18,7 +18,7 @@ import { FocusAwareStatusBar, Pressable, View } from '@/ui';
 export default function GetStarted() {
   // state
   const [currentStep, setCurrentStep] = useState<AuthStepList>(
-    AuthStepList.ForgotPasswordVerify
+    AuthStepList.CheckPhone
   );
   const [prevStep, setPrevStep] = useState<AuthStepList[]>([]);
   const [checkUserData, setCheckUserData] = useState<CheckUserData | null>(
@@ -32,7 +32,13 @@ export default function GetStarted() {
   useSoftKeyboardEffect();
 
   const nextStep = (step: AuthStepList) => {
-    setPrevStep([...prevStep, currentStep]);
+    if (step === AuthStepList.SignIn) {
+      setPrevStep([AuthStepList.CheckPhone]);
+    } else if (step === AuthStepList.ForgotPasswordSuccess) {
+      setPrevStep([AuthStepList.CheckPhone, AuthStepList.SignIn]);
+    } else {
+      setPrevStep([...prevStep, currentStep]);
+    }
     setCurrentStep(step);
   };
 
@@ -56,6 +62,7 @@ export default function GetStarted() {
         return (
           <ForgotPasswordStep
             checkUserData={checkUserData}
+            setCheckUserData={setCheckUserData}
             setSharedDataForm={setSharedDataForm}
             nextStep={nextStep}
           />
@@ -70,9 +77,14 @@ export default function GetStarted() {
           />
         );
       case AuthStepList.NewPassword:
-        return <NewPasswordStep />;
+        return (
+          <NewPasswordStep
+            sharedDataForm={sharedDataForm!}
+            nextStep={nextStep}
+          />
+        );
       case AuthStepList.ForgotPasswordSuccess:
-        return <ForgotPasswordSuccessStep />;
+        return <ForgotPasswordSuccessStep nextStep={nextStep} />;
       case AuthStepList.SetPasswordVerify:
         return (
           <SetPasswordVerifyStep
@@ -101,7 +113,7 @@ export default function GetStarted() {
     }
   };
   return (
-    <View>
+    <View className="ios:pb-8 android:pb-12">
       <FocusAwareStatusBar />
       <View className="flex h-full flex-col">
         {prevStep.length > 0 && (

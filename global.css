@@ -10,6 +10,7 @@
 
     --red-ff0: #ff0000;
 
+    --gray-999: #999ca0;
     --gray-ebe: ##ebebeb;
 
     --blue-344: #3448f0;
@@ -17,6 +18,10 @@
 }
 
 @layer components {
+  .safe-area {
+    @apply ios:bg-white android:pt-[50px] android:pb-[0px] ios:pb-[0px];
+  }
+
   .error-message {
     @apply !mt-1 text-xs font-light text-red-ff0;
   }

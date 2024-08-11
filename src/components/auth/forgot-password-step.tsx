@@ -13,6 +13,7 @@ import PhoneForm from '@/ui/form/phone-form';
 
 type Props = {
   checkUserData: CheckUserData | null;
+  setCheckUserData: React.Dispatch<React.SetStateAction<CheckUserData | null>>;
   setSharedDataForm: React.Dispatch<
     React.SetStateAction<SharedDataForm | null>
   >;
@@ -21,6 +22,7 @@ type Props = {
 
 function ForgotPasswordStep({
   checkUserData,
+  setCheckUserData,
   setSharedDataForm,
   nextStep,
 }: Props) {
@@ -30,6 +32,12 @@ function ForgotPasswordStep({
     try {
       const phoneNumber = '+' + countrySelected.phoneCode + data.phone;
       const resData = await forgotPassword({ phone: phoneNumber });
+      setCheckUserData((prev) => ({
+        ...prev,
+        phone: data.phone,
+        phoneCode: countrySelected.phoneCode,
+        isoCode: countrySelected.isoCode,
+      }));
       setSharedDataForm({ id: resData.id });
       nextStep(AuthStepList.ForgotPasswordVerify);
     } catch (error: any) {
@@ -61,7 +69,7 @@ function ForgotPasswordStep({
           checkUserData?.phoneCode!
         )}
         containterClassName="px-8"
-        submitButtonCalssName="h-12 mt-0 mb-10 rounded-lg bg-primary"
+        submitButtonCalssName="h-12 mt-0 rounded-lg bg-primary"
         onSubmit={onSubmit}
       />
     </View>

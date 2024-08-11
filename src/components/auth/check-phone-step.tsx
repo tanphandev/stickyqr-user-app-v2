@@ -115,7 +115,7 @@ function CheckPhoneStep({
         setApiError={setErrorMessage}
         containterClassName="px-8"
         submitButtonCalssName="h-12 mt-0 mb-4 rounded-lg bg-primary"
-        secondaryButtonClassName="mb-10 mt-0 h-12 rounded-lg bg-white border"
+        secondaryButtonClassName="mt-0 h-12 rounded-lg bg-white border"
         onSubmit={onSubmit}
         onScanQR={onScanQR}
       />

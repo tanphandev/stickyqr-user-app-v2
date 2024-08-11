@@ -7,6 +7,7 @@ import HomeIconFilled from 'assets/navigation/home-filled.svg';
 import HomeIconRegular from 'assets/navigation/home-regular.svg';
 import ScanQrFilled from 'assets/navigation/scan-qr-filled.svg';
 import ScanQrRegular from 'assets/navigation/scan-qr-regular.svg';
+import type { Href } from 'expo-router';
 import { Redirect, SplashScreen, Tabs } from 'expo-router';
 import React, { useCallback, useEffect } from 'react';
 
@@ -30,10 +31,10 @@ export default function TabLayout() {
   }, [hideSplash, status]);
 
   if (isFirstTime) {
-    return <Redirect href={PATH.ONBOARDING} />;
+    return <Redirect href={PATH.ONBOARDING as Href} />;
   }
   if (status === 'signOut') {
-    return <Redirect href={PATH.GET_STARTED} />;
+    return <Redirect href={PATH.GET_STARTED as Href} />;
   }
   return (
     <Tabs>
@@ -41,6 +42,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: translate('MAIN_TABS.HOME'),
+          headerShown: false,
           tabBarIcon: ({ focused }) =>
             focused ? <HomeIconFilled /> : <HomeIconRegular />,
         }}

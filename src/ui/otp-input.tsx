@@ -14,6 +14,7 @@ type OTPInputProps = {
   otpInputItemClassName?: string;
   control: Control<OTPFormData, any>;
   value: string[];
+  isValidateChange?: boolean;
   setValue: UseFormSetValue<OTPFormData>;
   setError: UseFormSetError<OTPFormData>;
   clearErrors: UseFormClearErrors<OTPFormData>;
@@ -29,7 +30,9 @@ const OTPInput: React.FC<OTPInputProps> = ({
   otpInputItemClassName,
   control,
   value,
+  isValidateChange = false,
   setValue,
+  setError,
   clearErrors,
 }) => {
   // ref
@@ -38,15 +41,33 @@ const OTPInput: React.FC<OTPInputProps> = ({
   // state to track focused input
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
 
+  // validate OTP
+  const validateOTP = (otp: string[]) => {
+    const hasInvalidField = otp.some((value) => value === '');
+    if (hasInvalidField) {
+      setError('otp', {
+        type: 'manual',
+        message: 'OTP is invalid',
+      });
+      return false;
+    }
+    clearErrors('otp');
+    return true;
+  };
+
   // handle input change
   const handleChange = (currentValue: string, index: number) => {
     const currentOTP = value;
     currentOTP[index] = currentValue;
     setValue('otp', currentOTP);
+    if (isValidateChange) {
+      validateOTP(currentOTP);
+    } else {
+      clearErrors('otp');
+    }
     if (currentValue.length === 1 && index < 5) {
       inputRefs.current[index + 1]?.focus();
     }
-    clearErrors('otp');
   };
 
   // handle backspace
@@ -64,7 +85,11 @@ const OTPInput: React.FC<OTPInputProps> = ({
         setValue('otp', currentOTP);
       }
     }
-    clearErrors('otp');
+    if (isValidateChange) {
+      validateOTP(currentOTP);
+    } else {
+      clearErrors('otp');
+    }
   };
 
   // handle focus

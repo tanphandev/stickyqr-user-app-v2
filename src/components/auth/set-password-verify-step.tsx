@@ -210,9 +210,9 @@ function SetPasswordVerifyStep({
         <Button
           loading={loading}
           onPress={handleSubmit(onSubmitOTP)}
-          className="mb-10 mt-0 h-12 rounded-lg bg-primary"
+          className="mt-0 h-12 rounded-lg bg-primary"
           label={translate('AUTH.VERIFY')}
-          textClassName="font-normal"
+          textClassName="font-semibold"
         />
       </View>
       <GetCodeByBottomSheet ref={getByCoderef} onSubmit={getCode} />

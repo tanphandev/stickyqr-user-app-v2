@@ -1,3 +1,4 @@
+import type { Href } from 'expo-router';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { Text } from 'react-native';
@@ -22,7 +23,7 @@ export default function Onboarding() {
             label="Let's Get Started "
             onPress={() => {
               setIsFirstTime(false);
-              router.replace(PATH.GET_STARTED);
+              router.replace(PATH.GET_STARTED as Href);
             }}
           />
         </SafeAreaView>

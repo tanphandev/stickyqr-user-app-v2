@@ -2,7 +2,7 @@ import { useReactNavigationDevTools } from '@dev-plugins/react-navigation';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { ThemeProvider } from '@react-navigation/native';
 import { SplashScreen, Stack, useNavigationContainerRef } from 'expo-router';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import FlashMessage from 'react-native-flash-message';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
@@ -15,6 +15,11 @@ export { ErrorBoundary } from 'expo-router';
 import '../../global.css';
 
 import React from 'react';
+import {
+  initialWindowMetrics,
+  SafeAreaProvider,
+  SafeAreaView,
+} from 'react-native-safe-area-context';
 
 import PATH from '@/configs/navs';
 import toastConfig from '@/configs/toast';
@@ -64,13 +69,23 @@ function Providers({ children }: { children: React.ReactNode }) {
     >
       <ThemeProvider value={theme}>
         <APIProvider>
-          <SafeAreaView className="flex-1">
-            <BottomSheetModalProvider>
-              {children}
-              <FlashMessage position="top" />
-              <Toast config={toastConfig} />
-            </BottomSheetModalProvider>
-          </SafeAreaView>
+          <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+            <SafeAreaView
+              className="bg-red-500"
+              // eslint-disable-next-line react-native/no-inline-styles
+              style={{
+                flex: 1,
+                backgroundColor: 'white',
+              }}
+              edges={['top', 'left', 'right']}
+            >
+              <BottomSheetModalProvider>
+                {children}
+                <FlashMessage position="top" />
+                <Toast config={toastConfig} />
+              </BottomSheetModalProvider>
+            </SafeAreaView>
+          </SafeAreaProvider>
         </APIProvider>
       </ThemeProvider>
     </GestureHandlerRootView>

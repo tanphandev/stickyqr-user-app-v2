@@ -8,7 +8,7 @@ export default function RewardsScreen() {
   return (
     <View className="flex-1 ">
       <FocusAwareStatusBar />
-      <View className="flex-1 px-4 pt-16 ">
+      <View className="flex-1 px-4">
         <Text className="text-xl font-bold">
           {translate('REWARDS.REWARDS_SCREEN')}
         </Text>

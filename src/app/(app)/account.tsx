@@ -15,7 +15,7 @@ export default function AccountScreen() {
     <View className="flex-1 ">
       <FocusAwareStatusBar />
       <ScrollView>
-        <View className="flex-1 px-4 pt-16">
+        <View className="flex-1 px-4">
           <Text className="text-xl font-bold">
             {translate('ACCOUNT.ACCOUNT')}
           </Text>

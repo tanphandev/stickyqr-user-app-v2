@@ -184,7 +184,7 @@ const GetCodeByBottomSheet = forwardRef<GetCodeByBottomSheetRefType, Props>(
                   }}
                   className="mb-6 mt-16 h-12 rounded-xl bg-primary"
                   label={translate('AUTH.CONTINUE')}
-                  textClassName="font-normal"
+                  textClassName="font-semibold"
                 />
               </View>
             </View>

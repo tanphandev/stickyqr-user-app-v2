@@ -1,4 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
+import type { Href } from 'expo-router';
 import { useRouter } from 'expo-router';
 import { Text, View } from 'react-native';
 import Toast from 'react-native-toast-message';
@@ -47,7 +48,7 @@ function SetPasswordStep({ checkUserData, sharedDataForm }: Props) {
         const userData = await getProfile();
         // sign in
         signIn(token, userData);
-        router.push(PATH.HOME);
+        router.push(PATH.HOME as Href);
       }
     } catch (error: any) {
       Toast.show({

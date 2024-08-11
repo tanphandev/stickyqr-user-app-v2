@@ -221,7 +221,7 @@ function ConfirmPasswordForm({
                 setLoading(false);
               }
             })}
-            textClassName="font-normal"
+            textClassName="font-semibold"
           />
         </View>
       </View>
