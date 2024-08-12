@@ -2,7 +2,7 @@ import { colorScheme, useColorScheme } from 'nativewind';
 import React from 'react';
 import { useMMKVString } from 'react-native-mmkv';
 
-import { storage } from '../storage';
+import { storage } from '../storage/storage';
 
 const SELECTED_THEME = 'SELECTED_THEME';
 export type ColorSchemeType = 'light' | 'dark' | 'system';
@@ -32,7 +32,6 @@ export const useSelectedTheme = () => {
 export const loadSelectedTheme = () => {
   const theme = storage.getString(SELECTED_THEME) ?? 'light';
   if (theme !== undefined) {
-    console.log('theme', theme);
     colorScheme.set(theme as ColorSchemeType);
   }
 };

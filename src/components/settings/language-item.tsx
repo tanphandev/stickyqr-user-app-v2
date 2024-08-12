@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import { useSelectedLanguage } from '@/core';
-import { translate } from '@/core';
+import { useSelectedLanguage } from '@/core/i18n';
 import type { Language } from '@/core/i18n/resources';
+import { translate } from '@/core/i18n/utils';
 import type { Option } from '@/ui';
 import { Options, useModal } from '@/ui';
 

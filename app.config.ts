@@ -12,10 +12,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   slug: ClientEnv.EAS_PROJECT_SLUG,
   version: Env.VERSION.toString(),
   orientation: 'portrait',
-  icon: './assets/icon.png',
+  icon: './assets/brand/icon.png',
   userInterfaceStyle: 'automatic',
   splash: {
-    image: './assets/splash.png',
+    image: './assets/brand/splash.png',
     backgroundColor: '#ffffff',
   },
   updates: {
@@ -31,7 +31,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   android: {
     adaptiveIcon: {
-      foregroundImage: './assets/adaptive-icon.png',
+      foregroundImage: './assets/brand/adaptive-icon.png',
       backgroundColor: '#ffffff',
     },
     package: Env.PACKAGE,

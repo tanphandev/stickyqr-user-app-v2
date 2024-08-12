@@ -1,7 +1,9 @@
+import type { Href } from 'expo-router';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { Text } from 'react-native';
 
+import PATH from '@/configs/navs';
 import { useIsFirstTime } from '@/core/hooks';
 import { Button, FocusAwareStatusBar, SafeAreaView, View } from '@/ui';
 
@@ -21,7 +23,7 @@ export default function Onboarding() {
             label="Let's Get Started "
             onPress={() => {
               setIsFirstTime(false);
-              router.replace('/login');
+              router.replace(PATH.GET_STARTED as Href);
             }}
           />
         </SafeAreaView>

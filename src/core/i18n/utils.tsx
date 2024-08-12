@@ -6,16 +6,16 @@ import { NativeModules, Platform } from 'react-native';
 import { useMMKVString } from 'react-native-mmkv';
 import RNRestart from 'react-native-restart';
 
-import { storage } from '../storage';
+import { storage } from '../storage/storage';
 import type { Language, resources } from './resources';
 import type { RecursiveKeyOf } from './types';
 
 type DefaultLocale = typeof resources.en.translation;
 export type TxKeyPath = RecursiveKeyOf<DefaultLocale>;
 
-export const LOCAL = 'local';
+export const LANG_KEY = 'language';
 
-export const getLanguage = () => storage.getString(LOCAL); // 'Marc' getItem<Language | undefined>(LOCAL);
+export const getLanguage = () => storage.getString(LANG_KEY); // 'Marc' getItem<Language | undefined>(LANG_KEY);
 
 export const translate = memoize(
   (key: TxKeyPath, options = undefined) =>
@@ -40,7 +40,7 @@ export const changeLanguage = (lang: Language) => {
 };
 
 export const useSelectedLanguage = () => {
-  const [language, setLang] = useMMKVString(LOCAL);
+  const [language, setLang] = useMMKVString(LANG_KEY);
 
   const setLanguage = useCallback(
     (lang: Language) => {

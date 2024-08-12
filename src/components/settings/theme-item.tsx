@@ -1,7 +1,8 @@
 import React from 'react';
 
-import type { ColorSchemeType } from '@/core';
-import { translate, useSelectedTheme } from '@/core';
+import type { ColorSchemeType } from '@/core/hooks';
+import { useSelectedTheme } from '@/core/hooks';
+import { translate } from '@/core/i18n/utils';
 import type { Option } from '@/ui';
 import { Options, useModal } from '@/ui';
 

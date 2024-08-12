@@ -80,6 +80,7 @@ const client = z.object({
   EAS_PROJECT_OWNER: z.string(),
   EAS_PROJECT_SLUG: z.string(),
   EAS_PROJECT_ID: z.string(),
+  ENABLE_LOGGER: z.boolean(),
 });
 
 const buildTime = z.object({
@@ -102,6 +103,7 @@ const _clientEnv = {
   EAS_PROJECT_OWNER: process.env.EAS_PROJECT_OWNER,
   EAS_PROJECT_SLUG: process.env.EAS_PROJECT_SLUG,
   EAS_PROJECT_ID: process.env.EAS_PROJECT_ID,
+  ENABLE_LOGGER: process.env.ENABLE_LOGGER === 'true',
 };
 
 /**

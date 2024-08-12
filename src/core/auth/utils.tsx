@@ -1,10 +1,11 @@
-import { getItem, removeItem, setItem } from '@/core/storage';
+import { getItem, removeItem, setItem } from '@/core/storage/storage';
 
 const TOKEN = 'token';
 
 export type TokenType = {
   access: string;
   refresh: string;
+  expiresIn: string;
 };
 
 export const getToken = () => getItem<TokenType>(TOKEN);
