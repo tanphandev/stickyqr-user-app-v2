@@ -159,7 +159,7 @@ const PhoneInput = forwardRef<PhoneInputRef, Props>(function Component(
             render={({ field: { onChange, onBlur, value } }) => (
               <View className="flex h-12 flex-1 flex-row items-center">
                 <TextInput
-                  className={clsx('flex-1 text-lg', {
+                  className={clsx('flex-1 text-lg !text-black ', {
                     'mb-[6px]': Platform.OS === 'ios',
                   })}
                   onBlur={() => {

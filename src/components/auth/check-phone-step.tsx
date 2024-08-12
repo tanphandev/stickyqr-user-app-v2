@@ -5,14 +5,14 @@ import { Text, View } from 'react-native';
 import type { CheckUser, SetPassword, SharedDataForm } from '@/api/auth/type';
 import { useCheckPhone } from '@/api/auth/use-check-phone';
 import { useSendCode } from '@/api/auth/use-send-code';
+import type { PhoneFormSchemaType } from '@/components/form/phone-form';
+import PhoneForm from '@/components/form/phone-form';
 import { type Country } from '@/configs/country';
 import { translate } from '@/core/i18n/utils';
 import { logger } from '@/helper';
 import { findCountry } from '@/helper/country';
 import { AuthStepList } from '@/types/auth';
 import { type CheckUserData } from '@/types/auth';
-import type { PhoneFormSchemaType } from '@/ui/form/phone-form';
-import PhoneForm from '@/ui/form/phone-form';
 
 type Props = {
   checkUserData: CheckUserData | null;

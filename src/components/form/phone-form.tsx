@@ -1,16 +1,15 @@
 import clsx from 'clsx';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { KeyboardAvoidingView, Platform } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import * as z from 'zod';
 
 import type { Country } from '@/configs/country';
 import { defaultCountry as dfCountry } from '@/configs/country';
 import { ERROR_KEY } from '@/constants/error-key';
 import { Button, View } from '@/ui';
-
-import type { PhoneInputRef } from '../phone-input';
-import PhoneInput from '../phone-input';
+import type { PhoneInputRef } from '@/ui/phone-input';
+import PhoneInput from '@/ui/phone-input';
 
 const phoneFormSchema = z.object({
   phone: z.string().min(1, { message: ERROR_KEY.PHONE_REQUIRED }),
@@ -70,52 +69,58 @@ function PhoneForm({
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{ flex: 1 }}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 50}
     >
-      <View
-        className={clsx(
-          'flex flex-1 flex-col justify-between',
-          containterClassName
-        )}
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        keyboardShouldPersistTaps="handled"
       >
-        <View>
-          <PhoneInput
-            allowEditPhone={allowEditPhone}
-            ref={phoneInputRef}
-            name="phone"
-            control={control}
-            phoneError={errors.phone}
-            phoneLabel={phoneLabel}
-            phonePlaceholder={phonePlaceholder}
-            defaultCountry={defaultCountry}
-            errorApi={errorApi}
-            clearErrorApi={setApiError}
-          />
-        </View>
-        <View>
-          <Button
-            loading={loading}
-            className={submitButtonCalssName}
-            label={submitLabel}
-            onPress={handleSubmit(async (data) => {
-              try {
-                setLoading(true);
-                await onSubmit(data, phoneInputRef.current?.selectedCountry!);
-              } finally {
-                setLoading(false);
-              }
-            })}
-            textClassName="font-semibold"
-          />
-          {onScanQR && (
-            <Button
-              className={secondaryButtonClassName}
-              label={scanLabel}
-              textClassName="text-black font-normal"
-              onPress={onScanQR}
-            />
+        <View
+          className={clsx(
+            'flex flex-1 flex-col justify-between',
+            containterClassName
           )}
+        >
+          <View className="flex-1">
+            <PhoneInput
+              allowEditPhone={allowEditPhone}
+              ref={phoneInputRef}
+              name="phone"
+              control={control}
+              phoneError={errors.phone}
+              phoneLabel={phoneLabel}
+              phonePlaceholder={phonePlaceholder}
+              defaultCountry={defaultCountry}
+              errorApi={errorApi}
+              clearErrorApi={setApiError}
+            />
+          </View>
+          <View>
+            <Button
+              loading={loading}
+              className={submitButtonCalssName}
+              label={submitLabel}
+              onPress={handleSubmit(async (data) => {
+                try {
+                  setLoading(true);
+                  await onSubmit(data, phoneInputRef.current?.selectedCountry!);
+                } finally {
+                  setLoading(false);
+                }
+              })}
+              textClassName="font-semibold"
+            />
+            {onScanQR && (
+              <Button
+                className={secondaryButtonClassName}
+                label={scanLabel}
+                textClassName="text-black font-normal"
+                onPress={onScanQR}
+              />
+            )}
+          </View>
         </View>
-      </View>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 }

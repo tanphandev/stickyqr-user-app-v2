@@ -7,14 +7,14 @@ import Toast from 'react-native-toast-message';
 import { useGetProfile } from '@/api/auth';
 import type { SetPasswordVerify, SharedDataForm } from '@/api/auth/type';
 import { useSetPasswordVerify } from '@/api/auth/use-set-password-verify';
+import type { ConfirmPasswordForm as ConfirmPasswordFormType } from '@/components/form/confirm-password-form';
+import ConfirmPasswordForm from '@/components/form/confirm-password-form';
 import PATH from '@/configs/navs';
 import { signIn } from '@/core/auth';
 import { setToken } from '@/core/auth/utils';
 import { translate } from '@/core/i18n';
 import { logger } from '@/helper';
 import type { CheckUserData } from '@/types/auth';
-import type { ConfirmPasswordForm as ConfirmPasswordFormType } from '@/ui/form/confirm-password-form';
-import ConfirmPasswordForm from '@/ui/form/confirm-password-form';
 
 type Props = {
   checkUserData: CheckUserData | null;

@@ -9,6 +9,8 @@ import {
 } from 'react-hook-form';
 import { Pressable, TextInput } from 'react-native';
 
+import { ERROR_KEY } from '@/constants/error-key';
+
 type OTPInputProps = {
   containerClassName?: string;
   otpInputItemClassName?: string;
@@ -47,7 +49,7 @@ const OTPInput: React.FC<OTPInputProps> = ({
     if (hasInvalidField) {
       setError('otp', {
         type: 'manual',
-        message: 'OTP is invalid',
+        message: ERROR_KEY.OTP_INVALID,
       });
       return false;
     }

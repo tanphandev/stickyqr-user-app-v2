@@ -4,12 +4,12 @@ import Toast from 'react-native-toast-message';
 
 import type { SharedDataForm } from '@/api/auth/type';
 import { useForgotPassword } from '@/api/auth/use-forgot-password';
+import PhoneForm from '@/components/form/phone-form';
 import { translate } from '@/core/i18n';
 import { logger } from '@/helper';
 import { findCountry } from '@/helper/country';
 import type { CheckUserData } from '@/types/auth';
 import { AuthStepList } from '@/types/auth';
-import PhoneForm from '@/ui/form/phone-form';
 
 type Props = {
   checkUserData: CheckUserData | null;

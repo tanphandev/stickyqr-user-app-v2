@@ -1,12 +1,19 @@
 import clsx from 'clsx';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Text, View } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native';
 import Toast from 'react-native-toast-message';
 
 import type { SharedDataForm } from '@/api/auth/type';
 import { useForogotPasswordIsValidCode } from '@/api/auth/use-forgot-password-is-valid-code';
 import { useForgotPasswordResendCode } from '@/api/auth/use-forgot-password-resend-code';
+import { ERROR_KEY } from '@/constants/error-key';
 import useCountdown from '@/core/hooks/use-count-down';
 import { translate } from '@/core/i18n';
 import { logger } from '@/helper';
@@ -76,7 +83,7 @@ function ForgotPasswordVerifyStep({
     if (isEmpty) {
       setError('otp', {
         type: 'manual',
-        message: 'OTP is required',
+        message: ERROR_KEY.OTP_REQUIRED,
       });
       return;
     } else if (hasEmptyField) {
@@ -147,73 +154,85 @@ function ForgotPasswordVerifyStep({
   }, []);
 
   return (
-    <Fragment>
-      <View className="flex flex-1 flex-col justify-between px-8">
-        <View>
-          <Text className="mb-6 mt-9 text-center text-xl font-semibold">
-            {translate('AUTH.VERIFICATION_CODE')}
-          </Text>
-          <Text className="text-center text-base leading-[24px]">
-            {translate('AUTH.ENTER_THE_CODE_SENT_TO_YOUR_DEVICE')}
-          </Text>
-          <OTPInput
-            control={control}
-            value={getValues('otp')}
-            setValue={setValue}
-            clearErrors={clearErrors}
-            setError={setError}
-            isValidateChange={true}
-          />
-          <View className="">
-            <Text className="text-center">
-              {isVoice
-                ? translate('AUTH.PLEASE_ENTER_THE_CODE_YOU_HEAR_ON_THE_CALL')
-                : translate('AUTH.PLEASE_ENTER_THE_CODE_TEXTED_TO_YOUR_PHONE', {
-                    haveEmail: checkUserData.email
-                      ? ' ' +
-                        translate('AUTH.AND_EMAIL') +
-                        ' ' +
-                        checkUserData.email
-                      : '',
-                  })}
-              {'\u00A0'}
-              <Text
-                className="text-blue-344 underline"
-                onPress={toggleAndResendCode}
-              >
-                {translate('AUTH.TAP_HERE')}
-              </Text>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 50}
+    >
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        keyboardShouldPersistTaps="handled"
+      >
+        <View className="flex flex-1 flex-col justify-between px-8">
+          <View className="flex-1">
+            <Text className="mb-6 mt-9 text-center text-xl font-semibold">
+              {translate('AUTH.VERIFICATION_CODE')}
             </Text>
+            <Text className="text-center text-base leading-[24px]">
+              {translate('AUTH.ENTER_THE_CODE_SENT_TO_YOUR_DEVICE')}
+            </Text>
+            <OTPInput
+              control={control}
+              value={getValues('otp')}
+              setValue={setValue}
+              clearErrors={clearErrors}
+              setError={setError}
+              isValidateChange={true}
+            />
+            <View className="">
+              <Text className="text-center">
+                {isVoice
+                  ? translate('AUTH.PLEASE_ENTER_THE_CODE_YOU_HEAR_ON_THE_CALL')
+                  : translate(
+                      'AUTH.PLEASE_ENTER_THE_CODE_TEXTED_TO_YOUR_PHONE',
+                      {
+                        haveEmail: checkUserData?.email
+                          ? ' ' +
+                            translate('AUTH.AND_EMAIL') +
+                            ' ' +
+                            checkUserData?.email
+                          : '',
+                      }
+                    )}
+                {'\u00A0'}
+                <Text
+                  className="text-blue-344 underline"
+                  onPress={toggleAndResendCode}
+                >
+                  {translate('AUTH.TAP_HERE')}
+                </Text>
+              </Text>
+            </View>
+          </View>
+          <View className="flex flex-row gap-4">
+            <Button
+              disabled={!isDone}
+              onPress={() => resendCode()}
+              variant="link"
+              className="mt-0 h-12 flex-1 rounded-lg font-semibold disabled:bg-white"
+              label={`${
+                isVoice
+                  ? translate('AUTH.CALL_AGAIN')
+                  : translate('AUTH.TEXT_AGAIN')
+              }${countdown > 0 ? ` (${countdown})` : ''}`}
+              textClassName={clsx('font-semibold', {
+                'text-gray-999': !isDone,
+              })}
+            />
+            <Button
+              loading={loading}
+              disabled={!!errors.otp}
+              onPress={handleSubmit(onSubmitOTP)}
+              className="mt-0 h-12 flex-1 rounded-lg bg-primary disabled:bg-gray-ebe"
+              label={translate('AUTH.VERIFY')}
+              textClassName={clsx('font-semibold', {
+                'text-white': !!errors.otp,
+              })}
+            />
           </View>
         </View>
-        <View className="flex flex-row gap-4">
-          <Button
-            disabled={!isDone}
-            onPress={() => resendCode()}
-            variant="link"
-            className="mt-0 h-12 flex-1 rounded-lg font-semibold disabled:bg-white"
-            label={`${
-              isVoice
-                ? translate('AUTH.CALL_AGAIN')
-                : translate('AUTH.TEXT_AGAIN')
-            }${countdown > 0 ? ` (${countdown})` : ''}`}
-            textClassName={clsx('font-semibold', {
-              'text-gray-999': !isDone,
-            })}
-          />
-          <Button
-            loading={loading}
-            disabled={!!errors.otp}
-            onPress={handleSubmit(onSubmitOTP)}
-            className="mt-0 h-12 flex-1 rounded-lg bg-primary disabled:bg-gray-ebe"
-            label={translate('AUTH.VERIFY')}
-            textClassName={clsx('font-semibold', {
-              'text-white': !!errors.otp,
-            })}
-          />
-        </View>
-      </View>
-    </Fragment>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 

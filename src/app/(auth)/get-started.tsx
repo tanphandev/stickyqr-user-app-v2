@@ -113,7 +113,7 @@ export default function GetStarted() {
     }
   };
   return (
-    <View className="ios:pb-8 android:pb-12">
+    <View className="ios:pb-6 android:pb-12">
       <FocusAwareStatusBar />
       <View className="flex h-full flex-col">
         {prevStep.length > 0 && (
